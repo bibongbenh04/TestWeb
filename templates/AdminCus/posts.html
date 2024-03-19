@@ -1,0 +1,18 @@
+{%for p in posts %}
+    <!-- Post preview-->
+    <div class="post-preview">
+        <a href="/blog/{{p.url}}">
+            <img src="/media/{{p.image}}" class="responsive-img" style="float: right; width: 95px; height: 168.88px;object-fit: cover; margin-left: 10px;border: 3px solid #2ecc71;box-shadow: 1px 1px 20px rgba(46, 204, 113, 0.5)">
+            <h2 class="post-title">{{p.title |truncatewords:50 | safe}}</h2>
+            <h3 class="post-subtitle">{{p.preview_content |truncatewords:30 | safe}}</h3>
+        </a>
+        <p><br></p>
+        <p class="post-meta">
+            Posted by
+            <a href="#!">{{p.author}}</a>
+            on {{p.add_date}}
+        </p>
+    </div>
+    <!-- Divider-->
+    <hr class="my-4" />
+{%endfor %}

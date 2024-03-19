@@ -17,13 +17,20 @@ def dictionaryEL(request):
 
 def homePost(request):
 	# load all the post form db(10)
-	posts = Post.objects.all()[:11]
+	posts = Post.objects.all()[:5]
 	cats = Category.objects.all()
+
 	data = {
 		'posts' : posts,
 		'cats': cats
 	}
-	return render(request, 'AdminCus/home.html', data)
+	return render(request, 'AdminCus/homenew.html', data)
+	# return render(request, 'AdminCus/home.html', data)
+
+def load_more_posts(request):
+    offset = int(request.GET.get('offset', 0))
+    posts = Post.objects.all()[offset:offset+5]  # Lấy 5 bài viết tiếp theo
+    return render(request, 'AdminCus/posts.html', {'posts': posts})
 
 def post(request, url):
 	post = Post.objects.get(url=url)

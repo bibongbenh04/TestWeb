@@ -13,5 +13,6 @@ urlpatterns = [
 	path('quiz', views.quiz, name = 'quiz'),
 	path('home', views.homePost, name = 'home'),
     path('blog/<slug:url>', views.post),
+	path('load-more-posts/', views.load_more_posts, name='load_more_posts'),
 	path('dictionaryEL', views.dictionaryEL, name = 'dictionaryEL'),
 ]+static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

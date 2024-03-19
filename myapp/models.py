@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.db.models import Q
 from django.utils.html import format_html
+
 # from tinymce.models import HTMLField
 
 User = get_user_model()
@@ -38,16 +39,32 @@ class Category(models.Model):
         return self.title   
 
 #Post model
+# class Post(models.Model):
+#     post_id = models.AutoField(primary_key=True)
+#     title = models.CharField(max_length=200)
+#     # content = HTMLField()
+#     content = models.TextField()
+#     url = models.CharField(max_length=100, unique=True)
+#     cat = models.ForeignKey(Category, on_delete=models.CASCADE)
+#     image = models.ImageField(upload_to='post/')
+
+#     def __str__(self):
+#         return self.title
+
 class Post(models.Model):
+    author = models.CharField(max_length=30)
     post_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=200)
     # content = HTMLField()
     content = models.TextField()
+    preview_content = models.CharField(max_length=1000, blank=False)
     url = models.CharField(max_length=100, unique=True)
     cat = models.ForeignKey(Category, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='post/')
+    add_date = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
         return self.title
     
+
     
