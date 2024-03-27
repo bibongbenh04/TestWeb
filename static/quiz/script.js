@@ -5,7 +5,7 @@ const backbtn = document.querySelector('.back-btn');
 const popupInfo = document.querySelector('.popup-info');
 const exitBtn = document.querySelector('.exit-btn'); 
 const main = document.querySelector('.main'); 
-const continueBtn = document.querySelector('.continue-btn');  
+const continueBtn = document.querySelectorAll('.popup-info .continue-btn');  
 const quizSection = document.querySelector('.quiz-section');  
 const quizBox = document.querySelector('.quiz-box');
 const clock = document.querySelector('.clock');  
@@ -17,7 +17,7 @@ const goHomeButton = document.querySelector('.goHome-btn');
 var questionsDataText = document.getElementById('questions-data').textContent.slice(55);
 
 var questions = JSON.parse(questionsDataText);
-
+var questionsfillurl = questions;
 // console.log(questions);
 // Hàm xáo trộn mảng
 function shuffleArray(array) {
@@ -27,7 +27,6 @@ function shuffleArray(array) {
     }
 }
 
-shuffleArray(questions);
 
 startBtn.onclick = () => {
     popupInfo.classList.add('active');
@@ -60,21 +59,62 @@ goHomeButton.onclick = () => {
     }, 1000); 
 }
 
-continueBtn.onclick = () => {
-    shuffleArray(questions);
-    quizSection.classList.add('active');   
-    quizBox.classList.add('active');   
-    popupInfo.classList.remove('active'); 
-    main.classList.remove('active');
+shuffleArray(questionsfillurl);
 
-    questionsCount = 0;
-    questionsNum = 1;
-    userScore = 0;
+continueBtn.forEach(btn => {
+    // Xử lý cho từng nút tiếp tục ở đây
+    btn.addEventListener('click', () => {
+        const url = btn.getAttribute('data-url');
+        // console.log(url);   
+        questionsfillurl = findQuizDataByUrl(url);
+        if (!questionsfillurl) {
+            console.error("Không tìm thấy dữ liệu bài thi cho môn học này.");
+            return;
+        }
+        // console.log(questionsfillurl);
+        shuffleArray(questionsfillurl);
+        quizSection.classList.add('active');   
+        quizBox.classList.add('active');   
+        popupInfo.classList.remove('active'); 
+        main.classList.remove('active');
+    
+        questionsCount = 0;
+        questionsNum = 1;
+        userScore = 0;
+    
+        showQuestion(0);
+        questionCounter(1);
+        headerScore();
+    });
+});
 
-    showQuestion(0);
-    questionCounter(1);
-    headerScore();
+function findQuizDataByUrl(url) {
+    let quizfillbyurl = new Array(); 
+    for (const quiz of questions) {
+        // console.log(quiz.url);
+        if (quiz.url === url) {
+            quizfillbyurl.push(quiz);
+        }
+    }
+    // console.log(quizfillbyurl);
+    if (quizfillbyurl.length == 0) return null;
+    return quizfillbyurl;
 }
+// continueBtn.onclick = () => {
+//     shuffleArray(questions);
+//     quizSection.classList.add('active');   
+//     quizBox.classList.add('active');   
+//     popupInfo.classList.remove('active'); 
+//     main.classList.remove('active');
+
+//     questionsCount = 0;
+//     questionsNum = 1;
+//     userScore = 0;
+
+//     showQuestion(0);
+//     questionCounter(1);
+//     headerScore();
+// }
 
 let countdownTime = 15;
 let countdown;
@@ -112,7 +152,7 @@ function padZero(number) {
 }
 
 nextBtn.onclick = () => {
-    if (questionsCount >= questions.length-1) {
+    if (questionsCount >= questionsfillurl.length-1) {
         showResultBox();
         return;
     }
@@ -133,7 +173,7 @@ retryBox.onclick = () => {
     questionCounter(questionsNum);
     
     headerScore();
-    shuffleArray(questions);
+    shuffleArray(questionsfillurl);
 }
 
 let questionsCount = 0;
@@ -148,9 +188,9 @@ function showQuestion(index) {
     startCountdown();
     updateClock(countdownTime);
     const questionText = document.querySelector('.question-text');
-    questionText.textContent = `Question ${index+1}: ${questions[index].question_text} ?`;
-    correctChoice = questions[questionsCount].correctChoice;
-    let option1234 = [questions[index].option1, questions[index].option2, questions[index].option3, questions[index].option4];
+    questionText.textContent = `Question ${index+1}: ${questionsfillurl[index].question_text} ?`;
+    correctChoice = questionsfillurl[questionsCount].correctChoice;
+    let option1234 = [questionsfillurl[index].option1, questionsfillurl[index].option2, questionsfillurl[index].option3, questionsfillurl[index].option4];
     answerCorrect = option1234[correctChoice-1];
     shuffleArray(option1234);
     // after suffle array, find the correct answer
@@ -201,12 +241,12 @@ function optionSeleceted(answer) {
 
 function questionCounter(index) {
     const questionTotal = document.querySelector('.question-total');
-    questionTotal.textContent = `${index} of ${questions.length} Questions`;
+    questionTotal.textContent = `${index} of ${questionsfillurl.length} Questions`;
 }
 
 function headerScore() {
     const headerScoreText = document.querySelector('.header-score');
-    headerScoreText.textContent = `Score: ${userScore} / ${questions.length}`;
+    headerScoreText.textContent = `Score: ${userScore} / ${questionsfillurl.length}`;
 }
 
 function showResultBox() {
@@ -217,10 +257,10 @@ function showResultBox() {
     const circularProgress = document.querySelector('.circular-progress');
     const progressValue = document.querySelector('.progress-value');
     let progressStartValue = -1;
-    let progressEndValue = userScore/questions.length*100;
+    let progressEndValue = userScore/questionsfillurl.length*100;
     let speed = 20;
 
-    scoreText.textContent = `Your Score: ${userScore} out of  ${questions.length}`;
+    scoreText.textContent = `Your Score: ${userScore} out of  ${questionsfillurl.length}`;
 
     let progress = setInterval(() => {
         progressStartValue++;
@@ -231,3 +271,4 @@ function showResultBox() {
         }
     }, speed);
 }
+

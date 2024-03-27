@@ -68,6 +68,20 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+class Science(models.Model):
+    author = models.CharField(max_length=30)
+    science_id = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    preview_content = models.CharField(max_length=1000, blank=False)
+    url = models.CharField(max_length=100, unique=True)
+    cat = models.ForeignKey(Category, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='post/')
+    add_date = models.DateTimeField(auto_now_add=True, null=True)
+
+    def __str__(self):
+        return self.title
     
 
     

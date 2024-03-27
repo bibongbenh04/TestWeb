@@ -8,6 +8,7 @@
 	</script>
 </head>
 <body>
+	{% include 'django-chat.html' %}
 
 	<main class="main">
 		<div class="container">
@@ -67,12 +68,12 @@
 	<div class="popup-info">
 		<h2>Bộ Đề Kiểm Tra</h2>
 		{% for cat in questions_data.category%}
-			<span class="info">    <b>{{cat.title}}</b> - {{cat.description | safe}}</span>
+			<span class="info">  <a href="#" class="info-btn continue-btn" data-url="{{ cat.url }}">{{cat.title}} - {{cat.description | safe}}</a> </span> <br>
 		{% endfor %}
 
 		<div class="btn-group">
 			<button class="info-btn exit-btn">Exit Quiz</button>
-			<a href="#" class="info-btn continue-btn">Continue</a>
+			<!-- <a href="#" class="info-btn continue-btn">Continue</a> -->
 		</div>
 	</div>
 	<script src="{% static 'quiz/script.js' %}?v=2"></script>

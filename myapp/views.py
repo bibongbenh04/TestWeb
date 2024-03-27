@@ -3,7 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User, auth
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages as django_messages
-from .models import Feature, quizQuestion, Post, Category, categoryQuiz
+from .models import Feature, quizQuestion, Post, Category, categoryQuiz, Science
 from django.core.serializers import serialize
 from django.utils.translation import gettext as _
 
@@ -14,6 +14,17 @@ def index(request):
 
 	data = {
 		'posts' : posts,
+		'cats': cats
+	}
+	return render(request, 'index.html', data)
+
+# Create your views here.
+def science(request):
+	science = Science.objects.all()[:20]
+	cats = Category.objects.all()
+
+	data = {
+		'sciences' : science,
 		'cats': cats
 	}
 	return render(request, 'index.html', data)
@@ -56,6 +67,7 @@ def quiz(request):
             'option3': question.choice3,
             'option4': question.choice4,
             'correctChoice': question.correct_choice,
+			'url': question.cat.url,
         }
         for question in questions
     ]

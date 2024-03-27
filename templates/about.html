@@ -29,17 +29,12 @@
 
   <!-- Template Main CSS File -->
   <link href="{% static 'assets/css/style.css' %}?v=2" rel="stylesheet">
-  <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
-  <df-messenger
-    intent="WELCOME"
-    chat-title="AI Mam Xanh"
-    agent-id="e4b0e260-2aad-44bb-83a7-6ed497378077"
-    language-code="en"
-  ></df-messenger>
 </head>
 
 <body>
   {% include 'header.html' %}
+  {% include 'django-chat.html' %}
+
   <main id="main">
     <!-- ======= Hero Section ======= -->
     <section id="hero" class="d-flex align-items-center">
