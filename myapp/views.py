@@ -3,20 +3,12 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User, auth
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages as django_messages
-from .models import Feature, QuizQuestion, Post, Category
+from .models import Feature, quizQuestion, Post, Category, categoryQuiz
 from django.core.serializers import serialize
 from django.utils.translation import gettext as _
 
 # Create your views here.
 def index(request):
-	features = Feature.objects.all()
-	return render(request, 'index.html', {'features' : features})
-
-def dictionaryEL(request):
-	return render(request, 'themes/dictionaryEnglish.html')
-
-def homePost(request):
-	# load all the post form db(10)
 	posts = Post.objects.all()[:5]
 	cats = Category.objects.all()
 
@@ -24,8 +16,20 @@ def homePost(request):
 		'posts' : posts,
 		'cats': cats
 	}
-	return render(request, 'AdminCus/homenew.html', data)
-	# return render(request, 'AdminCus/home.html', data)
+	return render(request, 'index.html', data)
+
+def about(request):
+	# posts = Post.objects.all()[:5]
+	# cats = Category.objects.all()
+
+	# data = {
+	# 	'posts' : posts,
+	# 	'cats': cats
+	# }
+	return render(request, 'about.html')
+
+def dictionaryEL(request):
+	return render(request, 'themes/dictionaryEnglish.html')
 
 def load_more_posts(request):
     offset = int(request.GET.get('offset', 0))
@@ -35,7 +39,7 @@ def load_more_posts(request):
 def post(request, url):
 	post = Post.objects.get(url=url)
 	cats = Category.objects.all()
-	return render(request, 'AdminCus/post.html',{'post':post, 'cats': cats})
+	return render(request, 'AdminCus/tpost.html',{'post':post, 'cats': cats})
 
 # def category(request, url):
 #     cat = Category.objects.get(url=url)
@@ -43,7 +47,7 @@ def post(request, url):
 #     return render(request, "category.html", {'cat': cat, 'posts': posts})
 
 def quiz(request):
-    questions = QuizQuestion.objects.all()
+    questions = quizQuestion.objects.all()
     questions_list = [
         {
             'question_text': question.question_text,
@@ -55,7 +59,8 @@ def quiz(request):
         }
         for question in questions
     ]
-    data = {'questions': questions_list}
+
+    data = {'questions': questions_list, 'category': categoryQuiz.objects.all()}
     
     return render(request, 'quiz.html', {'questions_data': data})
 	

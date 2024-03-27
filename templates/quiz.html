@@ -1,10 +1,10 @@
 {% load static %}
 <html>
 <head>
-	<title>Quiz App</title>
+	<title>Mầm Xanh Trắc Nghiệm</title>
 	<link rel="stylesheet" href="{% static 'quiz/quizStyle.css' %}?v=2">
 	<script id="questions-data" type="application/json">
-		{{ questions_data|json_script:"questions-data"| safe}}
+		{{ questions_data.questions|json_script:"questions-data"| safe}}
 	</script>
 </head>
 <body>
@@ -56,7 +56,7 @@
 				<div class="home-content">
 					<h1>  Mầm xanh <br> Trắc nghiệm</h1>
 					<p>Đây là cuộc thi do ban tổ chức tạo ra nhằm góp phần ...</p>
-					<button class="start-btn">Start Quiz</button>
+					<button class="start-btn">Bắt Đầu Kiểm Tra</button>
 					<!-- <a class="goMamXanh-btn" href = "/"> <img src="{% static 'assets/img/logoMX.png'%}" alt=""> </a> -->
 					<a class="goMamXanh-btn" href = "/"> <img src="https://cdn-icons-png.flaticon.com/256/25/25694.png" style="width: 20%;"> </a>
 				</div>
@@ -65,12 +65,10 @@
 	</main>
 	
 	<div class="popup-info">
-		<h2>Quiz Guide</h2>
-		<span class="info">1. Câu hỏi 1 - Miêu tả thông tin của câu hỏi 1</span>
-		<span class="info">2. Câu hỏi 2 - Miêu tả thông tin của câu hỏi 1</span>
-		<span class="info">3. Câu hỏi 3 - Miêu tả thông tin của câu hỏi 1</span>
-		<span class="info">4. Câu hỏi 4 - Miêu tả thông tin của câu hỏi 1</span>
-		<span class="info">5. Câu hỏi 5 - Miêu tả thông tin của câu hỏi 1</span>
+		<h2>Bộ Đề Kiểm Tra</h2>
+		{% for cat in questions_data.category%}
+			<span class="info">    <b>{{cat.title}}</b> - {{cat.description | safe}}</span>
+		{% endfor %}
 
 		<div class="btn-group">
 			<button class="info-btn exit-btn">Exit Quiz</button>

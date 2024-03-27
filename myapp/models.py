@@ -12,7 +12,23 @@ class Feature(models.Model):
 	name = models.CharField(max_length=100)
 	details = models.CharField(max_length=500)
 
-class QuizQuestion(models.Model):
+class categoryQuiz(models.Model): 
+    image = models.ImageField(upload_to='category/')
+    cat_id = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    url = models.CharField(max_length=100, unique=True)
+    add_date = models.DateTimeField(auto_now_add=True, null=True)
+
+    
+    def image_tag(self):
+        return format_html('<img src="/media/{}" style = "width:40px;height:40px;border-radius:50%" />'.format(self.image))
+        
+    def __str__(self):
+        return self.title   
+
+class quizQuestion(models.Model):
+    cat = models.ForeignKey(categoryQuiz, on_delete=models.CASCADE)
     question_text = models.CharField(max_length=200)
     choice1 = models.CharField(max_length=200)
     choice2 = models.CharField(max_length=200)
@@ -37,19 +53,6 @@ class Category(models.Model):
     
     def __str__(self):
         return self.title   
-
-#Post model
-# class Post(models.Model):
-#     post_id = models.AutoField(primary_key=True)
-#     title = models.CharField(max_length=200)
-#     # content = HTMLField()
-#     content = models.TextField()
-#     url = models.CharField(max_length=100, unique=True)
-#     cat = models.ForeignKey(Category, on_delete=models.CASCADE)
-#     image = models.ImageField(upload_to='post/')
-
-#     def __str__(self):
-#         return self.title
 
 class Post(models.Model):
     author = models.CharField(max_length=30)

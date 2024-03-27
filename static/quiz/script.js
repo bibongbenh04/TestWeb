@@ -18,6 +18,7 @@ var questionsDataText = document.getElementById('questions-data').textContent.sl
 
 var questions = JSON.parse(questionsDataText);
 
+// console.log(questions);
 // Hàm xáo trộn mảng
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -26,9 +27,8 @@ function shuffleArray(array) {
     }
 }
 
-shuffleArray(questions.questions);
+shuffleArray(questions);
 
-console.log(questions.questions);
 startBtn.onclick = () => {
     popupInfo.classList.add('active');
     main.classList.add('active');
@@ -61,7 +61,7 @@ goHomeButton.onclick = () => {
 }
 
 continueBtn.onclick = () => {
-    shuffleArray(questions.questions);
+    shuffleArray(questions);
     quizSection.classList.add('active');   
     quizBox.classList.add('active');   
     popupInfo.classList.remove('active'); 
@@ -112,7 +112,7 @@ function padZero(number) {
 }
 
 nextBtn.onclick = () => {
-    if (questionsCount >= questions.questions.length-1) {
+    if (questionsCount >= questions.length-1) {
         showResultBox();
         return;
     }
@@ -133,7 +133,7 @@ retryBox.onclick = () => {
     questionCounter(questionsNum);
     
     headerScore();
-    shuffleArray(questions.questions);
+    shuffleArray(questions);
 }
 
 let questionsCount = 0;
@@ -148,9 +148,9 @@ function showQuestion(index) {
     startCountdown();
     updateClock(countdownTime);
     const questionText = document.querySelector('.question-text');
-    questionText.textContent = `Question ${index+1}: ${questions.questions[index].question_text} ?`;
-    correctChoice = questions.questions[questionsCount].correctChoice;
-    let option1234 = [questions.questions[index].option1, questions.questions[index].option2, questions.questions[index].option3, questions.questions[index].option4];
+    questionText.textContent = `Question ${index+1}: ${questions[index].question_text} ?`;
+    correctChoice = questions[questionsCount].correctChoice;
+    let option1234 = [questions[index].option1, questions[index].option2, questions[index].option3, questions[index].option4];
     answerCorrect = option1234[correctChoice-1];
     shuffleArray(option1234);
     // after suffle array, find the correct answer
@@ -175,7 +175,7 @@ function showQuestion(index) {
 function optionSeleceted(answer) {
     resetCountdown();
     let userAnswer = answer.textContent[0].charCodeAt(0) - 'A'.charCodeAt(0) + 1;
-    // correctChoice = questions.questions[questionsCount].correctChoice;
+    // correctChoice = questions[questionsCount].correctChoice;
     let allOptions = optionList.children.length;
 
     if(userAnswer == correctChoice) {
@@ -201,12 +201,12 @@ function optionSeleceted(answer) {
 
 function questionCounter(index) {
     const questionTotal = document.querySelector('.question-total');
-    questionTotal.textContent = `${index} of ${questions.questions.length} Questions`;
+    questionTotal.textContent = `${index} of ${questions.length} Questions`;
 }
 
 function headerScore() {
     const headerScoreText = document.querySelector('.header-score');
-    headerScoreText.textContent = `Score: ${userScore} / ${questions.questions.length}`;
+    headerScoreText.textContent = `Score: ${userScore} / ${questions.length}`;
 }
 
 function showResultBox() {
@@ -217,10 +217,10 @@ function showResultBox() {
     const circularProgress = document.querySelector('.circular-progress');
     const progressValue = document.querySelector('.progress-value');
     let progressStartValue = -1;
-    let progressEndValue = userScore/questions.questions.length*100;
+    let progressEndValue = userScore/questions.length*100;
     let speed = 20;
 
-    scoreText.textContent = `Your Score: ${userScore} out of  ${questions.questions.length}`;
+    scoreText.textContent = `Your Score: ${userScore} out of  ${questions.length}`;
 
     let progress = setInterval(() => {
         progressStartValue++;

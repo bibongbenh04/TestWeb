@@ -1134,7 +1134,7 @@ progress {
   }
   .col-md-10 {
     flex: 0 0 auto;
-    width: 83.33333333%;
+    /* width: 83.33333333%; */
   }
   .col-md-11 {
     flex: 0 0 auto;
@@ -10796,4 +10796,3 @@ header.masthead .post-heading .meta a {
     font-size: 2.25rem;
   }
 }
-

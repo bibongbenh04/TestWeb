@@ -11,11 +11,11 @@ body{
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: #4D59FB;
+  background: #4dfbb2;
 }
 ::selection{
   color: #fff;
-  background: #4D59FB;
+  background:#4dfbb2;
 }
 .wrapper{
   width: 420px;
@@ -44,7 +44,7 @@ body{
 }
 .search input:focus{
   padding: 0 41px;
-  border: 2px solid #4D59FB;
+  border: 2px solid #4dfbb2;
 }
 .search input::placeholder{
   color: #B8B8B8;
@@ -61,7 +61,7 @@ body{
   font-size: 16px;
 }
 .search input:focus ~ i{
-  color: #4D59FB;
+  color: #4dfbb2;
 }
 .search span{
   right: 15px;
@@ -131,7 +131,7 @@ ul .content::-webkit-scrollbar{
 .content li .details{
   padding-left: 10px;
   border-radius: 4px 0 0 4px;
-  border-left: 3px solid #4D59FB;
+  border-left: 3px solid #4dfbb2;
 }
 .content li p{
   font-size: 17px;

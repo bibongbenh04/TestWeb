@@ -11,8 +11,8 @@ urlpatterns = [
 	path('signup', views.signup, name = 'signup'),
 	path('logout', views.logout, name = 'logout'),
 	path('quiz', views.quiz, name = 'quiz'),
-	path('home', views.homePost, name = 'home'),
     path('blog/<slug:url>', views.post),
 	path('load-more-posts/', views.load_more_posts, name='load_more_posts'),
 	path('dictionaryEL', views.dictionaryEL, name = 'dictionaryEL'),
+	path('about', views.about, name = 'about'),
 ]+static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
