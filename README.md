@@ -8,13 +8,13 @@
 
 --> Clone the repository using the command below :
 ```bash
-git clone https://github.com/bibongbenh04/WebMamXanh.git
+git clone https://github.com/bibongbenh04/TestWeb.git
 
 ```
 
 --> Move into the directory where we have the project files : 
 ```bash
-cd WebMamXanh
+cd TestWeb
 
 ```
 
@@ -24,13 +24,13 @@ cd WebMamXanh
 pip install virtualenv
 
 # Then we create our virtual environment
-virtualenv envname
+virtualenv venv
 
 ```
 
 --> Activate the virtual environment :
 ```bash
-envname\scripts\activate
+venv\scripts\activate
 
 ```
 
