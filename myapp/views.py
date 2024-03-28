@@ -3,9 +3,10 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User, auth
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages as django_messages
-from .models import Feature, quizQuestion, Post, Category, categoryQuiz, Science, Header, Portfolio
+from .models import Feature, quizQuestion, Post, Category, categoryQuiz, Science, Header, Portfolio, Store
 from django.core.serializers import serialize
 from django.utils.translation import gettext as _
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 def index(request):
@@ -40,10 +41,15 @@ def store(request):
 
 	data = {
 		'heads': heads,
-		'stores' : science,
+		'stores' : stores,
 		'cats': cats
 	}
 	return render(request, 'store.html', data)
+
+def product(request, url):
+	product = Store.objects.get(url=url)
+	cats = Category.objects.all()
+	return render(request, 'AdminCus/product.html',{'product':product, 'cats': cats})
 
 def about(request):
 	heads = Header.objects.all()
@@ -70,6 +76,13 @@ def post(request, url):
 	post = Post.objects.get(url=url)
 	cats = Category.objects.all()
 	return render(request, 'AdminCus/tpost.html',{'post':post, 'cats': cats})
+
+def postfillcat(request, url):
+    cat = get_object_or_404(Category, url=url)
+    cats = Category.objects.all()
+    heads = Header.objects.all()  # Thêm dòng này để truy vấn tất cả các Header
+    posts = Post.objects.filter(cat=cat)
+    return render(request, 'AdminCus/post.html', {'posts': posts, 'cats': cats, 'heads': heads})
 
 def fscience(request, url):
 	post = Science.objects.get(url=url)

@@ -33,6 +33,7 @@
 
 <body>
   {% include 'django-chat.html' %}
+  {% include 'header.html' %}
   <main id="main">
     <!-- ======= Hero Section ======= -->
     <section id="hero" class="d-flex align-items-center">
@@ -41,10 +42,10 @@
           <div class="col-xl-7 col-lg-9 text-center">
             {% if user.is_authenticated %}
             <h1>Xin Chào, {{user.username}}</h1>
-            <h2>Một sản phẩm của IT-GEO-FR</h2>
+            <h2>Cửa hàng của Mầm Xanh</h2>
             {% else %}
             <h1>Chào mừng bạn <br> đến với Mầm Xanh</h1>
-            <h2>Một sản phẩm của IT-GEO-FR</h2>
+            <h2>Cửa hàng của IT-GEO-FR</h2>
             <div class="text-center">
               <a href="/login" class="btn-get-started scrollto">Bắt Đầu Nào</a>
             </div>
@@ -52,39 +53,44 @@
           </div>
         </div>
         
-        <div class="row icon-boxes">
+      <div class="row icon-boxes">
+        {% for s in stores %}
           <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="200">
             <div class="icon-box">
-              <div class="icon"><i class="ri-stack-line"></i></div>
-              <h4 class="title"><a href="">Lorem Ipsum</a></h4>
-              <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
+              <a href="/product/{{s.url}}">{{s.image_tag}}</a>
+              <h4 class="title"><a href="/product/{{s.url}}">{{s.nameStore}}</a></h4>
+              <p class="description">{{s.price_000vnd}}0 VNĐ - {{s.numberStore}} SP</p>
+              <p>{{s.preview_content |truncatewords:30 | safe}}</p>
             </div>
           </div>
-          
+        {% endfor %} 
+      </div>
+
+      <!--           
           <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="300">
             <div class="icon-box">
               <div class="icon"><i class="ri-palette-line"></i></div>
               <h4 class="title"><a href="">Sed ut perspiciatis</a></h4>
               <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
             </div>
-        </div>
-        
-        <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="400">
-          <div class="icon-box">
-            <div class="icon"><i class="ri-command-line"></i></div>
-            <h4 class="title"><a href="">Magni Dolores</a></h4>
-            <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
           </div>
-        </div>
-        
-        <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="500">
-          <div class="icon-box">
-            <div class="icon"><i class="ri-fingerprint-line"></i></div>
-            <h4 class="title"><a href="">Nemo Enim</a></h4>
-            <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
+          
+          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="400">
+            <div class="icon-box">
+              <div class="icon"><i class="ri-command-line"></i></div>
+              <h4 class="title"><a href="">Magni Dolores</a></h4>
+              <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
+            </div>
           </div>
-        </div>
-
+          
+          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="500">
+            <div class="icon-box">
+              <div class="icon"><i class="ri-fingerprint-line"></i></div>
+              <h4 class="title"><a href="">Nemo Enim</a></h4>
+              <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
+            </div>
+          </div>
+          
         <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="600">
           <div class="icon-box">
             <div class="icon"><i class="ri-fingerprint-line"></i></div>
@@ -113,7 +119,7 @@
             <h4 class="title"><a href="">Nemo Enim</a></h4>
             <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
           </div>
-        </div>
+        </div> -->
         
       </div>
     </div>

@@ -4,6 +4,7 @@ from django.contrib.auth.models import Group
 from django.db.models import Q
 from django.utils.html import format_html
 
+
 # from tinymce.models import HTMLField
 
 User = get_user_model()
@@ -13,6 +14,7 @@ class Feature(models.Model):
 	details = models.CharField(max_length=500)
 
 class categoryQuiz(models.Model): 
+    is_active = models.BooleanField(default=True)
     image = models.ImageField(upload_to='category/')
     cat_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=100)
@@ -86,18 +88,23 @@ class Science(models.Model):
 class Store(models.Model):
     seller = models.CharField(max_length=30)
     store_id = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=200)
+    nameStore = models.CharField(max_length=200)
+    numberStore = models.DecimalField(max_digits=10, decimal_places=0, default=0)
     content = models.TextField()
     preview_content = models.CharField(max_length=1000, blank=False)
-    link_fb_seller = models.CharField(max_length=30)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    numberPhone_seller = models.DecimalField(max_digits=10, decimal_places=0, default=0000000000)
+    link_conection_seller = models.CharField(max_length=100)
+    price_000vnd = models.DecimalField(max_digits=10, decimal_places=2)
     url = models.CharField(max_length=100, unique=True)
     cat = models.ForeignKey(Category, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='post/')
+    image = models.ImageField(upload_to='store/')
     add_date = models.DateTimeField(auto_now_add=True, null=True)
 
+    def image_tag(self):
+        return format_html('<img src="/media/{}" style = "width:auto;height:100px;border-radius:40%;filter: drop-shadow(1px 1px 20px green)" />'.format(self.image))
+
     def __str__(self):
-        return self.title
+        return self.nameStore
 
 class Header(models.Model):
     is_active = models.BooleanField(default=True)

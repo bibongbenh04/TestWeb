@@ -68,7 +68,9 @@
 	<div class="popup-info">
 		<h2>Bộ Đề Kiểm Tra</h2>
 		{% for cat in questions_data.category%}
-			<span class="info">  <a href="#" class="info-btn continue-btn" data-url="{{ cat.url }}">{{cat.title}} - {{cat.description | safe}}</a> </span> <br>
+			{% if cat.is_active %}
+				<span class="info">  <a href="#" class="info-btn continue-btn" data-url="{{ cat.url }}">{{cat.title}} - {{cat.description | safe}}</a> </span> <br>
+			{% endif %}
 		{% endfor %}
 
 		<div class="btn-group">

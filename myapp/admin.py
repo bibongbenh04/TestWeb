@@ -18,6 +18,15 @@ class PostAdmin(admin.ModelAdmin):
     class Media:
         js = ('https://cdn.tiny.cloud/1/3q1fzzm9ciix8rz2k5kj1v8vwyymlrhnq1a85iji04lb7i0n/tinymce/5/tinymce.min.js','assets/js/TextPost.js',)
 
+class StoreAdmin(admin.ModelAdmin):
+    list_display = ('image_tag', 'nameStore',)
+    search_fields = ('nameStore',)
+    list_filter = ('cat',)
+    list_per_page = 5
+
+    class Media:
+        js = ('https://cdn.tiny.cloud/1/3q1fzzm9ciix8rz2k5kj1v8vwyymlrhnq1a85iji04lb7i0n/tinymce/5/tinymce.min.js','assets/js/TextPost.js',)
+
 # QuizQuestion.objects.all().delete()
 admin.site.register(categoryQuiz, CategoryAdmin)
 admin.site.register(quizQuestion)
@@ -26,7 +35,7 @@ admin.site.register(Post, PostAdmin)
 admin.site.register(Science, PostAdmin)
 admin.site.register(Header)
 admin.site.register(Portfolio)
-admin.site.register(Store)
+admin.site.register(Store, StoreAdmin)
 
 
 
