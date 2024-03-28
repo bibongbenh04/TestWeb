@@ -82,6 +82,49 @@ class Science(models.Model):
 
     def __str__(self):
         return self.title
+
+class Store(models.Model):
+    seller = models.CharField(max_length=30)
+    store_id = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    preview_content = models.CharField(max_length=1000, blank=False)
+    link_fb_seller = models.CharField(max_length=30)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    url = models.CharField(max_length=100, unique=True)
+    cat = models.ForeignKey(Category, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='post/')
+    add_date = models.DateTimeField(auto_now_add=True, null=True)
+
+    def __str__(self):
+        return self.title
+
+class Header(models.Model):
+    is_active = models.BooleanField(default=True)
+    title = models.CharField(max_length=100)
+    url = models.CharField(max_length=200)
+    # logo = models.ImageField(upload_to='header_logos/'
+
+    def __str__(self):
+        return self.title
+
+class Portfolio(models.Model):
+    is_active = models.BooleanField(default=True)
+    TYPE_CHOICES = [
+        ('Card', 'Card'),
+        ('App', 'App'),
+        ('Web', 'Web'),
+    ]
+    typeP = models.CharField(max_length=4, choices=TYPE_CHOICES)
+    title = models.CharField(max_length=100)
+    url = models.CharField(max_length=200)
+    # logo = models.ImageField(upload_to='header_logos/'
+
+    def __str__(self):
+        return self.title
+
+    
+
     
 
     

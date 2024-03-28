@@ -3,16 +3,18 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User, auth
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages as django_messages
-from .models import Feature, quizQuestion, Post, Category, categoryQuiz, Science
+from .models import Feature, quizQuestion, Post, Category, categoryQuiz, Science, Header, Portfolio
 from django.core.serializers import serialize
 from django.utils.translation import gettext as _
 
 # Create your views here.
 def index(request):
+	heads = Header.objects.all()
 	posts = Post.objects.all()[:5]
 	cats = Category.objects.all()
 
 	data = {
+		'heads': heads,
 		'posts' : posts,
 		'cats': cats
 	}
@@ -20,24 +22,36 @@ def index(request):
 
 # Create your views here.
 def science(request):
+	heads = Header.objects.all()
 	science = Science.objects.all()[:20]
 	cats = Category.objects.all()
 
 	data = {
+		'heads': heads,
 		'sciences' : science,
 		'cats': cats
 	}
-	return render(request, 'index.html', data)
+	return render(request, 'science.html', data)
+
+def store(request):
+	heads = Header.objects.all()
+	stores = Store.objects.all()[:8]
+	cats = Category.objects.all()
+
+	data = {
+		'heads': heads,
+		'stores' : science,
+		'cats': cats
+	}
+	return render(request, 'store.html', data)
 
 def about(request):
-	# posts = Post.objects.all()[:5]
-	# cats = Category.objects.all()
+	heads = Header.objects.all()
 
-	# data = {
-	# 	'posts' : posts,
-	# 	'cats': cats
-	# }
-	return render(request, 'about.html')
+	data = {
+		'heads': heads,
+	}
+	return render(request, 'about.html', data)
 
 def dictionaryEL(request):
 	return render(request, 'themes/dictionaryEnglish.html')
@@ -47,11 +61,20 @@ def load_more_posts(request):
     posts = Post.objects.all()[offset:offset+5]  # Lấy 5 bài viết tiếp theo
     return render(request, 'AdminCus/posts.html', {'posts': posts})
 
+def load_more_science(request):
+    offset = int(request.GET.get('offset', 0))
+    posts = Science.objects.all()[offset:offset+5]  # Lấy 5 bài viết tiếp theo
+    return render(request, 'AdminCus/posts.html', {'posts': posts})
+
 def post(request, url):
 	post = Post.objects.get(url=url)
 	cats = Category.objects.all()
 	return render(request, 'AdminCus/tpost.html',{'post':post, 'cats': cats})
 
+def fscience(request, url):
+	post = Science.objects.get(url=url)
+	cats = Category.objects.all()
+	return render(request, 'AdminCus/tpost.html',{'post':post, 'cats': cats})
 # def category(request, url):
 #     cat = Category.objects.get(url=url)
 #     posts = Post.objects.filter(cat=cat)

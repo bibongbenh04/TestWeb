@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django import forms
-from .models import quizQuestion, Category, Post, categoryQuiz, Science
+from .models import quizQuestion, Category, Post, categoryQuiz, Science, Header, Portfolio, Store
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 # Register your models here.
@@ -24,4 +24,9 @@ admin.site.register(quizQuestion)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Post, PostAdmin)
 admin.site.register(Science, PostAdmin)
+admin.site.register(Header)
+admin.site.register(Portfolio)
+admin.site.register(Store)
+
+
 
