@@ -10,9 +10,9 @@ from django.shortcuts import get_object_or_404
 
 # Create your views here.
 def index(request):
-	heads = Header.objects.all()
+	heads = Header.objects.filter(is_active = True)
 	posts = Post.objects.all()[:5]
-	cats = Category.objects.all()
+	cats = Category.objects.filter(is_active = True)
 
 	data = {
 		'heads': heads,
@@ -23,9 +23,9 @@ def index(request):
 
 # Create your views here.
 def science(request):
-	heads = Header.objects.all()
-	science = Science.objects.all()[:20]
-	cats = Category.objects.all()
+	heads = Header.objects.filter(is_active = True)
+	science = Science.objects.filter(is_active = True)[:5]
+	cats = Category.objects.filter(is_active = True)
 
 	data = {
 		'heads': heads,
@@ -35,9 +35,9 @@ def science(request):
 	return render(request, 'science.html', data)
 
 def store(request):
-	heads = Header.objects.all()
-	stores = Store.objects.all()[:8]
-	cats = Category.objects.all()
+	heads = Header.objects.filter(is_active = True)
+	stores = Store.objects.filter(is_active = True)[:8]
+	cats = Category.objects.filter(is_active = True)
 
 	data = {
 		'heads': heads,
@@ -46,13 +46,38 @@ def store(request):
 	}
 	return render(request, 'store.html', data)
 
+def searchByName(request):
+	heads = Header.objects.filter(is_active = True)
+	query = request.GET.get('query', '')
+	posts = Post.objects.filter(title__icontains=query)[:5]
+	sciences = Science.objects.filter(title__icontains=query)[:5]
+	context = {
+		'sciences':sciences,
+		'heads': heads,
+        'posts': posts,  # Giả sử kết quả tìm kiếm của bạn
+        'query': query,
+    }
+	return render(request, 'AdminCus/post.html', context)
+
+def searchStoreByName(request):
+	heads = Header.objects.filter(is_active = True)
+	query = request.GET.get('query', '')
+	stores = Store.objects.filter(nameStore__icontains=query)[:8]
+	context = {
+		'heads': heads,
+		'product': product,
+        'stores': stores,  # Giả sử kết quả tìm kiếm của bạn
+        'query': query,
+    }
+	return render(request, 'store.html', context)
+
 def product(request, url):
 	product = Store.objects.get(url=url)
-	cats = Category.objects.all()
+	cats = Category.objects.filter(is_active = True)
 	return render(request, 'AdminCus/product.html',{'product':product, 'cats': cats})
 
 def about(request):
-	heads = Header.objects.all()
+	heads = Header.objects.filter(is_active = True)
 
 	data = {
 		'heads': heads,
@@ -67,26 +92,26 @@ def load_more_posts(request):
     posts = Post.objects.all()[offset:offset+5]  # Lấy 5 bài viết tiếp theo
     return render(request, 'AdminCus/posts.html', {'posts': posts})
 
-def load_more_science(request):
+def load_more_sciences(request):
     offset = int(request.GET.get('offset', 0))
     posts = Science.objects.all()[offset:offset+5]  # Lấy 5 bài viết tiếp theo
     return render(request, 'AdminCus/posts.html', {'posts': posts})
 
 def post(request, url):
 	post = Post.objects.get(url=url)
-	cats = Category.objects.all()
+	cats = Category.objects.filter(is_active = True)
 	return render(request, 'AdminCus/tpost.html',{'post':post, 'cats': cats})
 
 def postfillcat(request, url):
     cat = get_object_or_404(Category, url=url)
-    cats = Category.objects.all()
-    heads = Header.objects.all()  # Thêm dòng này để truy vấn tất cả các Header
+    cats = Category.objects.filter(is_active = True)
+    heads = Header.objects.filter(is_active = True)  # Thêm dòng này để truy vấn tất cả các Header
     posts = Post.objects.filter(cat=cat)
     return render(request, 'AdminCus/post.html', {'posts': posts, 'cats': cats, 'heads': heads})
 
 def fscience(request, url):
 	post = Science.objects.get(url=url)
-	cats = Category.objects.all()
+	cats = Category.objects.filter(is_active = True)
 	return render(request, 'AdminCus/tpost.html',{'post':post, 'cats': cats})
 # def category(request, url):
 #     cat = Category.objects.get(url=url)
@@ -94,7 +119,7 @@ def fscience(request, url):
 #     return render(request, "category.html", {'cat': cat, 'posts': posts})
 
 def quiz(request):
-    questions = quizQuestion.objects.all()
+    questions = quizQuestion.objects.filter(is_active = True)
     questions_list = [
         {
             'question_text': question.question_text,
@@ -123,7 +148,9 @@ def login(request):
 			auth.login(request, user)
 			return redirect('/')
 		else:
-			messages.info(request, 'Credentials Invalid')
+			storage = django_messages.get_messages(request)
+			storage.used = True
+			django_messages.info(request, 'Credentials Invalid')
 			return redirect('login')
 	else:
 		return render(request, 'themes/login.html')

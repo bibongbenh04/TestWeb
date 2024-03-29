@@ -1,4 +1,5 @@
 {%for p in posts %}
+    {% if p.is_active %}
     <!-- Post preview-->
     <div class="post-preview">
         <a href="/blog/{{p.url}}">
@@ -15,4 +16,5 @@
     </div>
     <!-- Divider-->
     <hr class="my-4" />
+    {% endif %}
 {%endfor %}

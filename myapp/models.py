@@ -30,6 +30,7 @@ class categoryQuiz(models.Model):
         return self.title   
 
 class quizQuestion(models.Model):
+    is_active = models.BooleanField(default=True)
     cat = models.ForeignKey(categoryQuiz, on_delete=models.CASCADE)
     question_text = models.CharField(max_length=200)
     choice1 = models.CharField(max_length=200)
@@ -43,6 +44,7 @@ class quizQuestion(models.Model):
 
 #Category model
 class Category(models.Model):
+    is_active = models.BooleanField(default=True)
     cat_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=100)
     description = models.TextField()
@@ -57,6 +59,7 @@ class Category(models.Model):
         return self.title   
 
 class Post(models.Model):
+    is_active = models.BooleanField(default=True)
     author = models.CharField(max_length=30)
     post_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=200)
@@ -72,6 +75,7 @@ class Post(models.Model):
         return self.title
 
 class Science(models.Model):
+    is_active = models.BooleanField(default=True)
     author = models.CharField(max_length=30)
     science_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=200)
@@ -86,6 +90,7 @@ class Science(models.Model):
         return self.title
 
 class Store(models.Model):
+    is_active = models.BooleanField(default=True)
     seller = models.CharField(max_length=30)
     store_id = models.AutoField(primary_key=True)
     nameStore = models.CharField(max_length=200)

@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>Mầm Xanh Trắc Nghiệm</title>
-	<link rel="stylesheet" href="{% static 'quiz/quizStyle.css' %}?v=2">
+	<link rel="stylesheet" href="{% static 'quiz/quizStyle.css' %}">
 	<script id="questions-data" type="application/json">
 		{{ questions_data.questions|json_script:"questions-data"| safe}}
 	</script>
@@ -68,9 +68,9 @@
 	<div class="popup-info">
 		<h2>Bộ Đề Kiểm Tra</h2>
 		{% for cat in questions_data.category%}
-			{% if cat.is_active %}
+			<!-- {% if cat.is_active %} -->
 				<span class="info">  <a href="#" class="info-btn continue-btn" data-url="{{ cat.url }}">{{cat.title}} - {{cat.description | safe}}</a> </span> <br>
-			{% endif %}
+			<!-- {% endif %} -->
 		{% endfor %}
 
 		<div class="btn-group">

@@ -16,7 +16,10 @@ urlpatterns = [
     path('category/<slug:url>', views.postfillcat),
     path('science/<slug:url>', views.fscience),
     path('product/<slug:url>', views.product),
+    path('SearchByName/', views.searchByName, name = 'searchbyname'),
+    path('SearchStoreByName/', views.searchStoreByName, name = 'searchstorebyname'),
 	path('load-more-posts/', views.load_more_posts, name='load_more_posts'),
+	path('load-more-sciences/', views.load_more_sciences, name='load_more_sciences'),
 	path('dictionaryEL', views.dictionaryEL, name = 'dictionaryEL'),
 	path('about', views.about, name = 'about'),
 ]+static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
