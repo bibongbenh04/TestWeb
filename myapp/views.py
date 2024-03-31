@@ -7,6 +7,9 @@ from .models import Feature, quizQuestion, Post, Category, categoryQuiz, Science
 from django.core.serializers import serialize
 from django.utils.translation import gettext as _
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
+
 
 # Create your views here.
 def index(request):
@@ -34,6 +37,11 @@ def science(request):
 	}
 	return render(request, 'science.html', data)
 
+def load_more_sciences(request):
+    offset = int(request.GET.get('offset', 0))
+    posts = Science.objects.all()[offset:offset+5]  # Lấy 5 bài viết tiếp theo
+    return render(request, 'AdminCus/posts.html', {'posts': posts})
+
 def store(request):
 	heads = Header.objects.filter(is_active = True)
 	stores = Store.objects.filter(is_active = True)[:8]
@@ -45,6 +53,7 @@ def store(request):
 		'cats': cats
 	}
 	return render(request, 'store.html', data)
+
 
 def searchByName(request):
 	heads = Header.objects.filter(is_active = True)
@@ -87,20 +96,16 @@ def about(request):
 def dictionaryEL(request):
 	return render(request, 'themes/dictionaryEnglish.html')
 
-def load_more_posts(request):
-    offset = int(request.GET.get('offset', 0))
-    posts = Post.objects.all()[offset:offset+5]  # Lấy 5 bài viết tiếp theo
-    return render(request, 'AdminCus/posts.html', {'posts': posts})
-
-def load_more_sciences(request):
-    offset = int(request.GET.get('offset', 0))
-    posts = Science.objects.all()[offset:offset+5]  # Lấy 5 bài viết tiếp theo
-    return render(request, 'AdminCus/posts.html', {'posts': posts})
 
 def post(request, url):
 	post = Post.objects.get(url=url)
 	cats = Category.objects.filter(is_active = True)
 	return render(request, 'AdminCus/tpost.html',{'post':post, 'cats': cats})
+
+def load_more_posts(request):
+    offset = int(request.GET.get('offset', 0))
+    posts = Post.objects.all()[offset:offset+5]  # Lấy 5 bài viết tiếp theo
+    return render(request, 'AdminCus/posts.html', {'posts': posts})
 
 def postfillcat(request, url):
     cat = get_object_or_404(Category, url=url)
@@ -150,7 +155,7 @@ def login(request):
 		else:
 			storage = django_messages.get_messages(request)
 			storage.used = True
-			django_messages.info(request, 'Credentials Invalid')
+			django_messages.info(request, 'Thông tin đăng nhập chưa chính xác !')
 			return redirect('login')
 	else:
 		return render(request, 'themes/login.html')
@@ -168,17 +173,31 @@ def signup(request):
 
 		if password == password2:
 			if User.objects.filter(email=email).exists():
-				django_messages.info(request, 'Email Already Used')
+				django_messages.info(request, 'Email Đã Được Sử Dụng')
 				return redirect('signup')
 			elif User.objects.filter(username=username).exists():
-				django_messages.info(request, 'Username Already Used')
+				django_messages.info(request, 'Username Đã Được Sử Dụng')
 				return redirect('signup')
 			else:
 				user = User.objects.create_user(username=username, email=email, password=password)
 				user.save()
 				return redirect('login')
 		else:
-			django_messages.info(request, 'Password Not The Same')
+			django_messages.info(request, 'Mật Khẩu Không Trùng')
 			return redirect('signup')
 	else:
 		return render(request, 'themes/signup.html')
+	
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Cập nhật session để tránh đăng xuất
+            django_messages.success(request, 'Mật khẩu của bạn đã được thay đổi thành công!')
+            return redirect('/')
+        else:
+            django_messages.error(request, 'Vui lòng sửa lại các lỗi bên dưới.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'themes/changePass.html', {'form': form})

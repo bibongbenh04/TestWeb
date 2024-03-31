@@ -67,10 +67,21 @@
 	
 	<div class="popup-info">
 		<h2>Bộ Đề Kiểm Tra</h2>
+		<h3 style="color: red;">Cuộc Thi</h3>
 		{% for cat in questions_data.category%}
-			<!-- {% if cat.is_active %} -->
-				<span class="info">  <a href="#" class="info-btn continue-btn" data-url="{{ cat.url }}">{{cat.title}} - {{cat.description | safe}}</a> </span> <br>
-			<!-- {% endif %} -->
+			{% if cat.is_active %}
+				{% if cat.typeCate == 'CONTEST' %}
+				<span class="info">  <a href="#" class="info-btn continue-btn" data-url="{{ cat.url }}" type="{{ cat.typeCate }}">{{cat.title}} - {{cat.description | safe}}</a> </span> <br>
+				{% endif %}
+			{% endif %}
+		{% endfor %}
+		<h3 style="color: red;">Luyện Tập</h3>
+		{% for cat in questions_data.category%}
+			{% if cat.is_active %}
+				{% if cat.typeCate == 'TEST ONL' %}
+					<span class="info">  <a href="#" class="info-btn continue-btn" data-url="{{ cat.url }}" type="{{ cat.typeCate }}">{{cat.title}} - {{cat.description | safe}}</a> </span> <br>
+				{% endif %}
+			{% endif %}
 		{% endfor %}
 
 		<div class="btn-group">
@@ -79,6 +90,5 @@
 		</div>
 	</div>
 	<script src="{% static 'quiz/script.js' %}?v=2"></script>
-	<script src="{% static 'quiz/question.js' %}?v=2"></script>
 </body>
 </html>

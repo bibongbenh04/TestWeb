@@ -43,7 +43,13 @@
           </li>
           <!-- <li><a class="nav-link scrollto " href="#portfolio">Danh Mục</a></li> -->
           {% if user.is_authenticated %}
-          <li><a class="getstarted scrollto" href="/logout">Đăng Xuất</a></li>
+          <li class="dropdown getstarted scrollto"><a href="/"><span> Tài Khoản </span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li ><a class="scrollhide" href="/changepass">Đổi Mật Khẩu</a></li>
+                  <li ><a class="scrollhide" href="/logout">Đăng Xuất</a></li>
+            </ul>
+          </li>
+          <!-- <li><a class="getstarted scrollto" href="/logout">Đăng Xuất</a></li> -->
           {% else %}
           <li><a class="getstarted scrollto" href="/login">Đăng Nhập</a></li>
           {% endif %}

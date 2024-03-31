@@ -33,26 +33,39 @@ const load_more_sciences = document.querySelector('.moresciences');
 const checkSearch = document.querySelector('.search');
 
 $(document).ready(function() {
-    // if (load_more_posts) console.log('Loading more posts');  
-    // if (load_more_sciences) console.log('Loading more sciences');
-    // if (checkSearch) console.log('Search');
-    
     var offset = 5;
+    var intervalID = null;
+
+    // Hàm để tải thêm bài viết hoặc khoa học
+    function loadMore() {
+        if (load_more_posts) {
+            $.get('/load-more-posts/?offset=' + offset, function(data) {
+                $('.moreblogs').append(data);
+                offset += 5;
+            });
+        } else if (load_more_sciences) {
+            $.get('/load-more-sciences/?offset=' + offset, function(data) {
+                $('.moresciences').append(data);
+                offset += 5;
+            });
+        }
+    }
+
+    // Hàm kiểm tra điều kiện và tải thêm nội dung khi cần
+    function checkAndLoad() {
+        if (parseInt($(window).scrollTop()) * 2.5 >= parseInt($(document).height()) - 10 - parseInt($(window).height())) {
+            loadMore(); // Tải thêm bài viết hoặc khoa học nếu cần
+        }
+    }
+
+    // Bắt đầu kiểm tra sau mỗi khoảng thời gian 5 giây
+    intervalID = setInterval(checkAndLoad, 5000);
+
+    // Dừng kiểm tra khi người dùng thực hiện tìm kiếm
     $(window).scroll(function() {
-        if(checkSearch) return;
-        if(parseInt($(window).scrollTop()) * 2.5 >= parseInt($(document).height()) - 10 - parseInt($(window).height())) {
-            // console.log("check");
-            if (load_more_posts) {
-                $.get('/load-more-posts/?offset=' + offset, function(data) {
-                    $('.moreblogs').append(data);
-                    offset += 5;
-                });
-            } else if (load_more_sciences) {
-                $.get('/load-more-sciences/?offset=' + offset, function(data) {
-                    $('.moresciences').append(data);
-                    offset += 5;
-                });
-            }
+        if(checkSearch) {
+            clearInterval(intervalID); // Dừng kiểm tra khi người dùng tìm kiếm
+            return;
         }
     });
 });

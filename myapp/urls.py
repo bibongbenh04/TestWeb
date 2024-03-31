@@ -10,6 +10,7 @@ urlpatterns = [
 	path('login', views.login, name = 'login'),
 	path('signup', views.signup, name = 'signup'),
 	path('logout', views.logout, name = 'logout'),
+	path('changepass', views.change_password, name = 'changepass'),
 	path('quiz', views.quiz, name = 'quiz'),
 	path('store', views.store, name = 'store'),
     path('blog/<slug:url>', views.post),

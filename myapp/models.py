@@ -14,6 +14,11 @@ class Feature(models.Model):
 	details = models.CharField(max_length=500)
 
 class categoryQuiz(models.Model): 
+    TYPE_CATEGORY_QUIZ = [
+        ('TEST ONL', 'TEST ONL'),
+        ('CONTEST', 'CONTEST'),
+    ]
+    typeCate = models.CharField(max_length=10, choices=TYPE_CATEGORY_QUIZ, default = 'TEST ONL')
     is_active = models.BooleanField(default=True)
     image = models.ImageField(upload_to='category/')
     cat_id = models.AutoField(primary_key=True)

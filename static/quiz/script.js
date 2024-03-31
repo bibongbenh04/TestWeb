@@ -18,6 +18,7 @@ var questionsDataText = document.getElementById('questions-data').textContent.sl
 
 var questions = JSON.parse(questionsDataText);
 var questionsfillurl = questions;
+var typeCategory = 'TEST_ONL';
 // console.log(questions);
 // Hàm xáo trộn mảng
 function shuffleArray(array) {
@@ -65,7 +66,7 @@ continueBtn.forEach(btn => {
     // Xử lý cho từng nút tiếp tục ở đây
     btn.addEventListener('click', () => {
         const url = btn.getAttribute('data-url');
-        // console.log(url);   
+        typeCategory = btn.getAttribute('type');
         questionsfillurl = findQuizDataByUrl(url);
         if (!questionsfillurl) {
             console.error("Không tìm thấy dữ liệu bài thi cho môn học này.");
@@ -77,16 +78,17 @@ continueBtn.forEach(btn => {
         quizBox.classList.add('active');   
         popupInfo.classList.remove('active'); 
         main.classList.remove('active');
-    
+        
         questionsCount = 0;
         questionsNum = 1;
         userScore = 0;
-    
+        
         showQuestion(0);
         questionCounter(1);
         headerScore();
     });
 });
+
 
 function findQuizDataByUrl(url) {
     let quizfillbyurl = new Array(); 
@@ -128,6 +130,10 @@ function startCountdown() {
             nullOption.classList.add('option');
             nullOption.textContent = 'null';
             optionSeleceted(nullOption); // Gọi hàm khi hết thời gian
+            if(typeCategory == "CONTEST") {
+                nextBtn.click();
+                return;
+            }
         } else {
             updateClock(countdownTime);
         }
@@ -217,12 +223,22 @@ function optionSeleceted(answer) {
     let userAnswer = answer.textContent[0].charCodeAt(0) - 'A'.charCodeAt(0) + 1;
     // correctChoice = questions[questionsCount].correctChoice;
     let allOptions = optionList.children.length;
+    
+    nextBtn.classList.add('active');
 
     if(userAnswer == correctChoice) {
-        answer.classList.add('correct');
         ++userScore;
+        if(typeCategory == "CONTEST") {
+            nextBtn.click();
+            return;
+        }
+        answer.classList.add('correct');
         headerScore();
     } else {
+        if(typeCategory == "CONTEST") {
+            nextBtn.click();
+            return;
+        }
         answer.classList.add('incorrect');
 
         for (let i = 0; i < allOptions; i++) {
@@ -236,7 +252,6 @@ function optionSeleceted(answer) {
         optionList.children[i].classList.add('disabled');
     }
 
-    nextBtn.classList.add('active');
 }
 
 function questionCounter(index) {
