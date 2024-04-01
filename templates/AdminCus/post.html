@@ -29,7 +29,7 @@
                             <!-- Post preview-->
                             <div class="post-preview">
                                 <a href="/blog/{{p.url}}">
-                                    <img src="/media/{{p.image}}" class="responsive-img" style="float: right; width: 95px; height: 168.88px;object-fit: cover; margin-left: 10px;border: 3px solid #2ecc71;box-shadow: 1px 1px 20px rgba(46, 204, 113, 0.5)">
+                                    <img src="{{p.image.url}}" class="responsive-img" style="float: right; width: 95px; height: 168.88px;object-fit: cover; margin-left: 10px;border: 3px solid #2ecc71;box-shadow: 1px 1px 20px rgba(46, 204, 113, 0.5)">
                                         <h2 class="post-title">{{p.title |truncatewords:50 | safe}}</h2>
                                         <h3 class="post-subtitle">{{p.preview_content |truncatewords:30 | safe}}</h3>
                                     </a>
@@ -65,7 +65,7 @@
                         <!-- Post preview-->
                         <div class="post-preview">
                                 <a href="/science/{{s.url}}">
-                                    <img src="/media/{{s.image}}" class="responsive-img" style="float: right; width: 95px; height: 168.88px;object-fit: cover; margin-left: 10px;border: 3px solid #2ecc71;box-shadow: 1px 1px 20px rgba(46, 204, 113, 0.5)">
+                                    <img src="{{s.image.url}}" class="responsive-img" style="float: right; width: 95px; height: 168.88px;object-fit: cover; margin-left: 10px;border: 3px solid #2ecc71;box-shadow: 1px 1px 20px rgba(46, 204, 113, 0.5)">
                                     <h2 class="post-title">{{s.title |truncatewords:50 | safe}}</h2>
                                     <h3 class="post-subtitle">{{s.preview_content |truncatewords:30 | safe}}</h3>
                                 </a>

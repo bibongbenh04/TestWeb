@@ -21,6 +21,7 @@
             <ul>
               {% for cat in cats %}
                 <!-- {% if cat.is_active %} -->
+                <img src="{{cat.image.url}}" alt="">
                   <li ><a class="scrollhide" href="/category/{{cat.url}}">{{cat.title}}</a></li>
                 <!-- {% endif %} -->
               {% endfor %}

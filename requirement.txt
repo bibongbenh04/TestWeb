@@ -1,4 +1,5 @@
-django-admin-material-dashboard
+django_cloudinary_storage
+whitenoise
 django-tinymce
 Pillow
 amqp==5.1.1
