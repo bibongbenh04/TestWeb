@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.db.models import Q
 from django.utils.html import format_html
+from django.utils import timezone
 
 
 # from tinymce.models import HTMLField
@@ -78,6 +79,15 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+class Comment(models.Model):
+    name = models.CharField(max_length=225)
+    post_name = models.ForeignKey(Post, on_delete=models.CASCADE)
+    body = models.TextField()
+    date = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return str(self.post_name)
 
 class Science(models.Model):
     is_active = models.BooleanField(default=True)

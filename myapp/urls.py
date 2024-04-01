@@ -13,7 +13,7 @@ urlpatterns = [
 	path('changepass', views.change_password, name = 'changepass'),
 	path('quiz', views.quiz, name = 'quiz'),
 	path('store', views.store, name = 'store'),
-    path('blog/<slug:url>', views.post),
+    path('blog/<slug:url>', views.post, name='blog'),
     path('category/<slug:url>', views.postfillcat),
     path('science/<slug:url>', views.fscience),
     path('product/<slug:url>', views.product),

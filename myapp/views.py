@@ -3,7 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User, auth
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages as django_messages
-from .models import Feature, quizQuestion, Post, Category, categoryQuiz, Science, Header, Portfolio, Store
+from .models import Feature, quizQuestion, Post, Category, categoryQuiz, Science, Header, Portfolio, Store, Comment
 from django.core.serializers import serialize
 from django.utils.translation import gettext as _
 from django.shortcuts import get_object_or_404
@@ -98,9 +98,23 @@ def dictionaryEL(request):
 
 
 def post(request, url):
-	post = Post.objects.get(url=url)
-	cats = Category.objects.filter(is_active = True)
-	return render(request, 'AdminCus/tpost.html',{'post':post, 'cats': cats})
+    post = Post.objects.get(url=url)
+    get_all_comments = Comment.objects.filter(post_name=post)
+    number_of_comments = 0
+    for _ in get_all_comments:
+        number_of_comments += 1
+
+    if request.method == 'POST':
+        name = request.POST['name']
+        body = request.POST['body']
+        new_comment = Comment(name=name, post_name=post, body=body)  # Corrected variable name
+        new_comment.save()
+        django_messages.success(request, 'Bình Luận Của Bạn Đã Được Thêm Vào !')
+        return redirect('blog', url=url)
+    
+    cats = Category.objects.filter(is_active=True)
+    return render(request, 'AdminCus/tpost.html', {'post': post, 'cats': cats, 'comments': get_all_comments, 'number_of_comments': number_of_comments})
+
 
 def load_more_posts(request):
     offset = int(request.GET.get('offset', 0))
