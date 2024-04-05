@@ -1,0 +1,61 @@
+<section name="comment">
+    <div class="post-comments py-2">
+        <h3 class="text-center display-1 secondary-title py-2">{{number_of_comments}} Bình Luận</h3>
+
+        <div class="comment-form">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="d-flex justify-content-between flex-wrap">
+                    {% if user.is_authenticated %}
+                    <input type="text" class="form-control" name="name" placeholder="Họ và tên"
+                        value="{{ user.username }}" readonly>
+                    {% else %}
+                    <input type="text" class="form-control" name="name" placeholder="Họ và tên" value="Ẩn Danh"
+                        readonly>
+                    {% endif %}
+                </div>
+                <textarea class="form-control mt-3" placeholder="Bình luận của bạn" name="body" rows="10"
+                    required></textarea>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary display-2 text-light mt-2">Đăng</button>
+                </div>
+            </form>
+        </div>
+
+        {% if messages %}
+        {% for message in messages %}
+        <h3 class="text-center display-1 secondary-title py-2">{{message}}</h3>
+        {% endfor %}
+        {% endif %}
+        <div class="comment-details">
+            {% for i in comments reversed %}
+            <div class="comment-item py-2">
+                <div class="d-flex">
+                    <div class="avatar px-2">
+                        <img src="https://res.cloudinary.com/dxojb4izx/image/upload/v1651345375/farm/assets/images/anonymous-user_ygfw4t.png"
+                            class="rounded" alt="">
+                    </div>
+                    <div class="comment-content">
+                        {% if i.name != 'Ẩn Danh' %}
+                        <h5 class="display-2 m-0">Người dùng <a href="/profile/{{i.name}}"><b>{{i.name}}</b></a> - Bình
+                            luận vào <i> {{i.date}}
+                            </i></h5>
+                        {% else %}
+                        <h5 class="display-2 m-0">Người dùng <b>{{i.name}}</b> - Bình
+                            luận vào <i> {{i.date}}
+                            </i></h5>
+                        {% endif %}
+                        <p class="title-secondary text-dark">
+                            {{i.body}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            <!-- <h3 class="text-center display-1 secondary-title py-2">Leave Comment</h3> -->
+
+        </div>
+
+    </div>
+</section>

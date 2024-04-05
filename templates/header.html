@@ -1,31 +1,31 @@
 {% load static %}
 <!-- ======= Header ======= -->
- <header id="header" class="fixed-top background-color-red">
-    <div class="container d-flex align-items-center justify-content-between">
-      
-      <h1 class="logo"><a href="/">Mầm Xanh<img src="{% static 'assets/img/logoMX.png'%}"></a></h1>
-      <!-- Uncomment below if you prefer to use an image logo -->
-      <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
-        <div class="box">
-          <input type="text" placeholder="Tìm kiếm" id="searchInput">
-          <a href="#" id="searchButton">
-            <i class="fas fa-search"></i>
-          </a>
-        </div>
-      <nav id="navbar" class="navbar">
-        <ul>
-          {% for head in heads %}
-              <li><a class="nav-link scrollto" href="{{head.url}}">{{head.title}}</a></li>
-          {% endfor %}
-          <li class="dropdown"><a href="/#post"><span> Bài Viết</span> <i class="bi bi-chevron-down"></i></a>
-            <ul>
-              {% for cat in cats %}
-                <!-- {% if cat.is_active %} -->
-                <img src="{{cat.image.url}}" alt="">
-                  <li ><a class="scrollhide" href="/category/{{cat.url}}">{{cat.title}}</a></li>
-                <!-- {% endif %} -->
-              {% endfor %}
-              <!-- <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
+<header id="header" class="fixed-top background-color-red">
+  <div class="container d-flex align-items-center justify-content-between">
+
+    <h1 class="logo"><a href="/"><img src="{% static 'assets/img/logoMX.png'%}"></a></h1>
+    <!-- Uncomment below if you prefer to use an image logo -->
+    <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+    <div class="box">
+      <input type="text" placeholder="Tìm kiếm" id="searchInput">
+      <a href="#" id="searchButton">
+        <i class="fas fa-search"></i>
+      </a>
+    </div>
+    <nav id="navbar" class="navbar">
+      <ul>
+        {% for head in heads %}
+        <li><a class="nav-link scrollto" href="{{head.url}}">{{head.title}}</a></li>
+        {% endfor %}
+        <li class="dropdown"><a href="/#post"><span> Bài Viết</span> <i class="bi bi-chevron-down"></i></a>
+          <ul>
+            {% for cat in cats %}
+            <!-- {% if cat.is_active %} -->
+            <!-- <img src="{{cat.image.url}}" alt=""> -->
+            <li><a class="scrollhide" href="/category/{{cat.url}}">{{cat.title}}</a></li>
+            <!-- {% endif %} -->
+            {% endfor %}
+            <!-- <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
                 <ul>
                   <li><a href="#">Deep Drop Down 1</a></li>
                   <li><a href="#">Deep Drop Down 2</a></li>
@@ -34,56 +34,57 @@
                   <li><a href="#">Deep Drop Down 5</a></li>
                 </ul>
               </li> -->
-            </ul>
-          </li>
-          <li class="dropdown"><a href="/science#"><span> Kiến Thức </span> <i class="bi bi-chevron-down"></i></a>
-            <ul>
-              <li ><a class="scrollhide" href="/science">Kiến Thức Chung</a></li>
-                  <li ><a class="scrollhide" href="/dictionaryEL">Từ Điển Tiếng Anh</a></li>
-            </ul>
-          </li>
-          <!-- <li><a class="nav-link scrollto " href="#portfolio">Danh Mục</a></li> -->
-          {% if user.is_authenticated %}
-          <li class="dropdown getstarted scrollto"><a href="/"><span> Tài Khoản </span> <i class="bi bi-chevron-down"></i></a>
-            <ul>
-              <li ><a class="scrollhide" href="/changepass">Đổi Mật Khẩu</a></li>
-                  <li ><a class="scrollhide" href="/logout">Đăng Xuất</a></li>
-            </ul>
-          </li>
-          <!-- <li><a class="getstarted scrollto" href="/logout">Đăng Xuất</a></li> -->
-          {% else %}
-          <li><a class="getstarted scrollto" href="/login">Đăng Nhập</a></li>
-          {% endif %}
-        </ul>
-        <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav><!-- .navbar -->
-      
-    </div>
-  </header><!-- End Header -->
+          </ul>
+        </li>
+        <li class="dropdown"><a href="/science#"><span> Kiến Thức </span> <i class="bi bi-chevron-down"></i></a>
+          <ul>
+            <li><a class="scrollhide" href="/science">Kiến Thức Chung</a></li>
+            <li><a class="scrollhide" href="/dictionaryEL">Từ Điển Tiếng Anh</a></li>
+          </ul>
+        </li>
+        <!-- <li><a class="nav-link scrollto " href="#portfolio">Danh Mục</a></li> -->
+        {% if user.is_authenticated %}
+        <li class="dropdown getstarted scrollto"><a href="/"><span> Tài Khoản </span> <i
+              class="bi bi-chevron-down"></i></a>
+          <ul>
+            <li><a class="scrollhide" href="/changepass">Đổi Mật Khẩu</a></li>
+            <li><a class="scrollhide" href="/logout">Đăng Xuất</a></li>
+          </ul>
+        </li>
+        <!-- <li><a class="getstarted scrollto" href="/logout">Đăng Xuất</a></li> -->
+        {% else %}
+        <li><a class="getstarted scrollto" href="/login">Đăng Nhập</a></li>
+        {% endif %}
+      </ul>
+      <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav><!-- .navbar -->
 
-  <script>
-    // Lấy phần tử input và button
-    var input = document.getElementById("searchInput");
-    var searchButton = document.getElementById("searchButton");
-  
-    // Định nghĩa hàm để thực hiện tìm kiếm
-    function doSearch() {
-      var searchTerm = input.value; // Lấy giá trị nhập vào từ ô input
-      var searchUrl = "/SearchByName?query=" + encodeURIComponent(searchTerm); // Thay "trang_tim_kiem.html" bằng URL của trang tìm kiếm thực tế
-      window.location.href = searchUrl; // Chuyển hướng đến trang tìm kiếm
-    }
-  
-    // Lắng nghe sự kiện nhấn phím Enter trong ô nhập liệu
-    input.addEventListener("keypress", function(event) {
-      if (event.key === "Enter") { // Kiểm tra xem phím nhấn có phải là Enter không
-        event.preventDefault(); // Ngăn chặn hành động mặc định của phím Enter
-        doSearch(); // Thực hiện tìm kiếm
-      }
-    });
-  
-    // Thêm sự kiện click vào nút tìm kiếm
-    searchButton.addEventListener("click", function(event) {
-      event.preventDefault(); // Ngăn chặn hành động mặc định
+  </div>
+</header><!-- End Header -->
+
+<script>
+  // Lấy phần tử input và button
+  var input = document.getElementById("searchInput");
+  var searchButton = document.getElementById("searchButton");
+
+  // Định nghĩa hàm để thực hiện tìm kiếm
+  function doSearch() {
+    var searchTerm = input.value; // Lấy giá trị nhập vào từ ô input
+    var searchUrl = "/SearchByName?query=" + encodeURIComponent(searchTerm); // Thay "trang_tim_kiem.html" bằng URL của trang tìm kiếm thực tế
+    window.location.href = searchUrl; // Chuyển hướng đến trang tìm kiếm
+  }
+
+  // Lắng nghe sự kiện nhấn phím Enter trong ô nhập liệu
+  input.addEventListener("keypress", function (event) {
+    if (event.key === "Enter") { // Kiểm tra xem phím nhấn có phải là Enter không
+      event.preventDefault(); // Ngăn chặn hành động mặc định của phím Enter
       doSearch(); // Thực hiện tìm kiếm
-    });
-  </script>
+    }
+  });
+
+  // Thêm sự kiện click vào nút tìm kiếm
+  searchButton.addEventListener("click", function (event) {
+    event.preventDefault(); // Ngăn chặn hành động mặc định
+    doSearch(); // Thực hiện tìm kiếm
+  });
+</script>

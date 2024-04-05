@@ -1,0 +1,50 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'admin/css/parallax.css' %}">
+
+<section class="parallax">
+    <img src="https://res.cloudinary.com/dflkxywlt/image/upload/v1712339987/image/Start%20Project%20Parallax%20Scrolling%20Website/ubkshhggszvn6eqxb6ck.png"
+        id="hill1">
+    <img src="https://res.cloudinary.com/dflkxywlt/image/upload/v1712339988/image/Start%20Project%20Parallax%20Scrolling%20Website/xfkvairsg30kuw7gtfmo.png"
+        id="hill2">
+    <img src="https://res.cloudinary.com/dflkxywlt/image/upload/v1712339987/image/Start%20Project%20Parallax%20Scrolling%20Website/jouc633x9ho2wpso5sjp.png"
+        id="hill3">
+    <img src="https://res.cloudinary.com/dflkxywlt/image/upload/v1712339988/image/Start%20Project%20Parallax%20Scrolling%20Website/mlibef5vdbeo3xiircqa.png"
+        id="hill4">
+    <img src="https://res.cloudinary.com/dflkxywlt/image/upload/v1712339988/image/Start%20Project%20Parallax%20Scrolling%20Website/mnxu103uzybuhyq4zd23.png"
+        id="hill5">
+    <img src="https://res.cloudinary.com/dflkxywlt/image/upload/v1712344184/image/Start%20Project%20Parallax%20Scrolling%20Website/r5b0m2q0artgsmwgx6ci.png"
+        id="human">
+    <img src="https://res.cloudinary.com/dflkxywlt/image/upload/v1712339989/image/Start%20Project%20Parallax%20Scrolling%20Website/ebeh98syklstijsvpv5f.png"
+        id="tree">
+    {% if user.is_authenticated %}
+    <h2 id="text"> Xin Chào, {{user.username}} <br> Đến với Mầm Xanh</h2>
+    {% else %}
+    <h1 id="text">Chào mừng bạn <br> <br> đến với Mầm Xanh</h1>
+    <a href="/login" id="text" class="btn-get-started scrollto">Bắt Đầu Nào</a>
+    {% endif %}
+    <img src="https://res.cloudinary.com/dflkxywlt/image/upload/v1712339989/image/Start%20Project%20Parallax%20Scrolling%20Website/nrskfatchxzpmoul5bed.png"
+        id="plant">
+    <img src="https://res.cloudinary.com/dflkxywlt/image/upload/v1712339988/image/Start%20Project%20Parallax%20Scrolling%20Website/oremqikit6j9rlupmbzk.png"
+        id="leaf">
+</section>
+
+<script src="{% static 'assets/js/parallax.js' %}"></script>
+
+<!-- <section id="hero" class="d-flex align-items-center">
+      <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
+        <div class="row justify-content-center">
+          <div class="col-xl-7 col-lg-9 text-center">
+            {% if user.is_authenticated %}
+            <h1>Xin Chào, {{user.username}}</h1>
+            <h2>Một sản phẩm của IT-GEO-FR</h2>
+            {% else %}
+            <h1>Chào mừng bạn <br> đến với Mầm Xanh</h1>
+            <h2>Một sản phẩm của IT-GEO-FR</h2>
+            <div class="text-center">
+              <a href="/login" class="btn-get-started scrollto">Bắt Đầu Nào</a>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </section> -->

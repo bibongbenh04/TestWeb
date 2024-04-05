@@ -1,0 +1,47 @@
+.parallax {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#text {
+    position: absolute;
+    font-size: 5em;
+    color: #002a13;
+    text-shadow: 5px 5px 10px rgb(255, 255, 255);
+}
+
+.parallax img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    pointer-events: none;
+}
+
+@media (min-width: 992px) {
+    #mainNav {
+        border-bottom: 1px solid transparent;
+        background: transparent;
+    }
+
+    #mainNav .navbar-brand {
+        color: #000000;
+    }
+
+    #mainNav .navbar-brand:focus,
+    #mainNav .navbar-brand:hover {
+        color: rgba(0, 0, 0, 0.8);
+    }
+
+    #mainNav .navbar-nav>li.nav-item>a.nav-link {
+        color: #000000;
+    }
+
+    #mainNav .navbar-nav>li.nav-item>a.nav-link:focus,
+    #mainNav .navbar-nav>li.nav-item>a.nav-link:hover {
+        color: rgba(0, 0, 0, 0.8);
+    }
+}

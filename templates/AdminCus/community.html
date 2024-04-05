@@ -3,7 +3,6 @@
 <html lang="en">
 
 <head>
-    <link href="{% static 'assets/css/style.css' %} " rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -15,66 +14,21 @@
         rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="{% static 'admin/css/styles.css' %} " rel="stylesheet" />
-
-
 </head>
 
 <body>
-    {% include 'header.html' %}
-    <!-- Main Content-->
-    {% if posts %}
-    <section id="post" class="post">
-        <!-- {{query}} -->
-        {% if query%}
-        Bài Viết
-        {% endif %}
-        <div class="container px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-7 blogs">
-                    {%for p in posts reversed%}
-                    {% if p.is_active %}
-                    <!-- Post preview-->
-                    <div class="post-preview">
-                        <a href="/blog/{{p.url}}">
-                            <img src="{{p.image.url}}" class="responsive-img"
-                                style="float: right; width: 95px; height: 168.88px;object-fit: cover; margin-left: 10px;border: 3px solid #2ecc71;box-shadow: 1px 1px 20px rgba(46, 204, 113, 0.5)">
-                            <h2 class="post-title">{{p.title |truncatewords:50 | safe}}</h2>
-                            <h3 class="post-subtitle">{{p.preview_content |truncatewords:30 | safe}}</h3>
-                        </a>
-                        <p><br></p>
-                        <p class="post-meta">
-                            Được đăng bởi
-                            <a href="#!">{{p.author}}</a>
-                            vào {{p.add_date}}
-                        </p>
-                    </div>
-                    <!-- Divider-->
-                    <hr class="my-4" />
-                    {% endif %}
-                    {%endfor %}
-                    <div class="moreblogs">
 
-                    </div>
-                    <!-- Pager-->
-                    <!-- <div class="d-flex justify-content-end mb-4"><div class="btn btn-primary text-uppercase">Xem Thêm Bài Viết →</div></div> -->
-                </div>
-            </div>
-        </div>
-    </section>
-    {% endif %}
-    {% if sciences%}
+    <!-- Main Content-->
     <section id="science" class="science">
-        {% if query%}
-        Kiến Thức
-        {% endif %}
+
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7 blogs">
-                    {%for s in sciences reversed%}
+                    {%for s in communities reversed %}
                     <!-- {% if s.is_active %} -->
                     <!-- Post preview-->
                     <div class="post-preview">
-                        <a href="/science/{{s.url}}">
+                        <a href="/community/{{s.url}}">
                             <img src="{{s.image.url}}" class="responsive-img"
                                 style="float: right; width: 95px; height: 168.88px;object-fit: cover; margin-left: 10px;border: 3px solid #2ecc71;box-shadow: 1px 1px 20px rgba(46, 204, 113, 0.5)">
                             <h2 class="post-title">{{s.title |truncatewords:50 | safe}}</h2>
@@ -82,9 +36,9 @@
                         </a>
                         <p><br></p>
                         <p class="post-meta">
-                            Posted by
+                            Được đăng bởi
                             <a href="#!">{{s.author}}</a>
-                            on {{s.add_date}}
+                            vào {{s.add_date}}
                         </p>
                     </div>
                     <!-- Divider-->
@@ -99,12 +53,7 @@
                 </div>
             </div>
         </div>
-
     </section>
-    {% endif %}
-    {% if query%}
-    <div class="search"> </div>
-    {% endif %}
 
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

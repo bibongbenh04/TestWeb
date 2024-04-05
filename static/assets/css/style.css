@@ -394,7 +394,7 @@ h6 {
 --------------------------------------------------------------*/
 #hero {
   width: 100%;
-  height: 100vh;
+  height: 200vh;
   position: relative;
   /* background: url("../img/hero-bg.jpg") top center; */
   background-size: cover;
@@ -402,8 +402,13 @@ h6 {
 }
 
 #hero:before {
+  width: 100%;
+  height: 100%;
   content: "";
-  background: #ECF6E1;
+  /* background: #ECF6E1; */
+  background-image: url('https://res.cloudinary.com/dflkxywlt/image/upload/v1712338934/image/qydcnzhfnkhcp58duy1q.png');
+  background-size: cover;
+  background-repeat: no-repeat;
   position: absolute;
   bottom: 0;
   top: 0;
@@ -564,6 +569,7 @@ section {
 .about {
   background: #ECF6E1;
 }
+
 .about .content h3 {
   font-weight: 600;
   font-size: 26px;
@@ -1129,6 +1135,7 @@ section {
   bottom: 15px;
   right: 15px;
 }
+
 /*--------------------------------------------------------------
 # Team
 --------------------------------------------------------------*/
@@ -1210,6 +1217,7 @@ section {
 .team .member:hover .social {
   opacity: 1;
 }
+
 /*--------------------------------------------------------------
 # Frequently Asked Questions
 --------------------------------------------------------------*/
@@ -1667,7 +1675,7 @@ section {
   width: 200px;
 }
 
-.box input{
+.box input {
   width: 0;
   outline: none;
   border: none;
@@ -1676,7 +1684,7 @@ section {
   background: transparent;
 }
 
-.box a .fas{
+.box a .fas {
   color: #1daf;
   font-size: 18px;
 }
