@@ -3,7 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User, auth
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages as django_messages
-from .models import Feature, quizQuestion, Post, Category, categoryQuiz, Science, Header, Portfolio, Store, Comment, Community, ProductImage
+from .models import Feature, quizQuestion, Post, Category, categoryQuiz, Science, Header, Portfolio, Store, Comment, Community, ProductImage, AccRoblox5k, Subject, LessonVideo, Instructor, Chapter, Course
 from django.core.serializers import serialize
 from django.utils.translation import gettext as _
 from django.shortcuts import get_object_or_404
@@ -11,6 +11,52 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.contenttypes.models import ContentType
 import math
+
+def subjects(request, url):
+	subject = get_object_or_404(Subject, url=url)
+	courses = Course.objects.filter(subject=subject)
+	
+	data = {
+		'subject':subject,
+		'data_courses':courses,
+	}
+	return render(request, 'subject.html',data)
+
+def course(request, url):
+	course = get_object_or_404(Course, url=url)
+	chapters = Chapter.objects.filter(course=course).order_by('order')
+	data = {
+		'course':course,
+		'chapters':chapters
+	}
+	return render(request, 'course.html',data)
+
+def convertLinkVideoYoutube(link):
+    base_url = "https://www.youtube.com/watch?v="
+    pos = len(base_url)    
+    return link[pos:]
+
+def lessonvideo(request, url):
+    lessonvideo = get_object_or_404(LessonVideo, url=url)
+    linkvideo = convertLinkVideoYoutube(lessonvideo.youtube_link)
+    chapters = lessonvideo.chapter.course.chapters.all().prefetch_related('videos')
+    
+    data = {
+        'lessonvideo': lessonvideo,
+        'linkvideo': linkvideo,
+        'chapters': chapters,  # Thêm danh sách các chương
+    }
+    
+    return render(request, 'video.html', data)
+
+def viewaccroblox(request, url):
+	accs = AccRoblox5k.objects.get(url=url)
+	# product_images = ProductImage.objects.filter(product=product)
+	product_images = "{% static 'assets/img/shop/17164523052706.gif' %}"
+	cats = Category.objects.filter(is_active = True)
+	nums_img = '2' #generate_string(math.ceil(6/product_images.count()))
+	
+	return render(request, 'AdminCus/product.html',{'product':product, 'cats': cats,'product_images': product_images, 'nums_img': nums_img})
 
 def searchByName(request):
 	heads = Header.objects.filter(is_active = True)
@@ -39,6 +85,7 @@ def searchStoreByName(request):
 
 # Create your views here.
 def index(request):
+	subjects = Subject.objects.filter(is_active=True)
 	heads = Header.objects.filter(is_active = True)
 	posts = Post.objects.all()[:5]
 	cats = Category.objects.filter(is_active = True)
@@ -46,7 +93,8 @@ def index(request):
 	data = {
 		'heads': heads,
 		'posts' : posts,
-		'cats': cats
+		'cats': cats,
+		'subjects':subjects
 	}
 	return render(request, 'index.html', data)
 
@@ -137,6 +185,8 @@ def about(request):
 
 def dictionaryEL(request):
 	return render(request, 'themes/dictionaryEnglish.html')
+
+
 
 def post(request, url):
     post = get_object_or_404(Post, url=url)

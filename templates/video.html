@@ -1,0 +1,173 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{lessonvideo.chapter.course}}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #181818;
+            color: white;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            margin: 20px;
+        }
+
+        .video-container {
+            flex: 3;
+            margin-right: 20px;
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+        }
+
+        .playlist-container {
+            flex: 1;
+            background-color: #232323;
+            padding: 10px;
+            border-radius: 8px;
+            overflow-y: auto;
+            max-height: 500px;
+        }
+
+        .chapter-header {
+            cursor: pointer;
+            padding: 10px;
+            background-color: #2c2c2c;
+            border-radius: 4px;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chapter-header:hover {
+            background-color: #3a3a3a;
+        }
+
+        .chapter-content {
+            display: none;
+            padding: 10px;
+            background-color: #3a3a3a;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .lesson-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .lesson-item:hover {
+            background-color: #4a4a4a;
+        }
+
+        .lesson-item img {
+            width: 80px;
+            height: 45px;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        .lesson-item div {
+            flex: 1;
+        }
+
+        .lesson-item p {
+            margin: 0;
+        }
+
+        .lesson-item .title {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .lesson-item .duration {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .arrow {
+            font-size: 14px;
+            color: #888;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Video Section -->
+        <div class="video-container">
+            <iframe
+                src="https://www.youtube.com/embed/{{ linkvideo }}?rel=0&modestbranding=1&autohide=1&showinfo=0&controls=1"
+                title="Course Video"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+        </div>
+
+        <!-- Playlist Section -->
+        <div class="playlist-container">
+            {% for chapter in chapters %}
+            <div class="chapter-section">
+                <div class="chapter-header" onclick="toggleChapter('chapter-{{ chapter.order }}')">
+                    <span>Chương {{ chapter.order }}: {{ chapter.title }}</span>
+                    <span id="arrow-chapter-{{ chapter.order }}" class="arrow">▼</span>
+                </div>
+                <div id="chapter-{{ chapter.order }}" class="chapter-content">
+                    {% for video in chapter.videos.all %}
+                    <div class="lesson-item">
+                        <a href="/lessonvideo/{{ video.url }}">
+                            <img src=" https://img.youtube.com/vi/{{ video.youtube_link|slice:'-11:' }}/0.jpg"
+                                alt="{{ video.title }}">
+                        </a>
+                        <div>
+                            <a href="/lessonvideo/{{ video.url }}">
+                                <p class="title">Bài {{video.order}}: {{ video.title |truncatewords:20 | safe}}</p>
+                                <p class="duration">{{ video.duration}}</p>
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        function toggleChapter(chapterId) {
+            var content = document.getElementById(chapterId);
+            var arrow = document.getElementById('arrow-' + chapterId);
+            if (content.style.display === "none" || content.style.display === "") {
+                content.style.display = "block";
+                arrow.textContent = "▲";
+            } else {
+                content.style.display = "none";
+                arrow.textContent = "▼";
+            }
+        }
+    </script>
+</body>
+
+</html>
