@@ -1,50 +1,136 @@
 {% load static %}
-<link rel="stylesheet" href="{% static 'admin/css/parallax.css' %}">
+
+<style>
+  .containerr {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 20px;
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 8px;
+  }
+
+  .courses-section,
+  .info-section {
+    flex: 1;
+    margin: 0 10px;
+  }
+
+  .carousel-container {
+    flex: 2;
+    margin: 0 10px;
+    overflow: hidden;
+    position: relative;
+    height: 300px;
+    /* Điều chỉnh chiều cao banner */
+    border-radius: 8px;
+  }
+
+  .carousel-slide {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+
+  .carousel-slide img {
+    width: 100%;
+    height: 300px;
+    /* Chiều cao của ảnh khớp với chiều cao của banner */
+    flex-shrink: 0;
+    border-radius: 8px;
+  }
+
+  .courses-section h2,
+  .info-section h2 {
+    margin-bottom: 10px;
+    color: #333;
+  }
+
+  .courses-section ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .courses-section li {
+    background-color: #e0e0e0;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 4px;
+  }
+
+  .info-section p {
+    margin: 5px 0;
+    color: #555;
+  }
+</style>
 
 <section class="parallax">
-    <img src="https://res.cloudinary.com/dflkxywlt/image/upload/v1712339987/image/Start%20Project%20Parallax%20Scrolling%20Website/ubkshhggszvn6eqxb6ck.png"
-        id="hill1">
-    <img src="https://res.cloudinary.com/dflkxywlt/image/upload/v1712339988/image/Start%20Project%20Parallax%20Scrolling%20Website/xfkvairsg30kuw7gtfmo.png"
-        id="hill2">
-    <img src="https://res.cloudinary.com/dflkxywlt/image/upload/v1712339987/image/Start%20Project%20Parallax%20Scrolling%20Website/jouc633x9ho2wpso5sjp.png"
-        id="hill3">
-    <img src="https://res.cloudinary.com/dflkxywlt/image/upload/v1712339988/image/Start%20Project%20Parallax%20Scrolling%20Website/mlibef5vdbeo3xiircqa.png"
-        id="hill4">
-    <img src="https://res.cloudinary.com/dflkxywlt/image/upload/v1712339988/image/Start%20Project%20Parallax%20Scrolling%20Website/mnxu103uzybuhyq4zd23.png"
-        id="hill5">
-    <img src="https://res.cloudinary.com/dflkxywlt/image/upload/v1712344184/image/Start%20Project%20Parallax%20Scrolling%20Website/r5b0m2q0artgsmwgx6ci.png"
-        id="human">
-    <img src="https://res.cloudinary.com/dflkxywlt/image/upload/v1712339989/image/Start%20Project%20Parallax%20Scrolling%20Website/ebeh98syklstijsvpv5f.png"
-        id="tree">
-    {% if user.is_authenticated %}
-    <h2 id="text"> Xin Chào, {{user.username}} <br> Đến với Mầm Xanh</h2>
-    {% else %}
-    <h1 id="text">Chào mừng bạn <br> <br> đến với Mầm Xanh</h1>
-    <a href="/login" id="text" class="btn-get-started scrollto">Bắt Đầu Nào</a>
-    {% endif %}
-    <img src="https://res.cloudinary.com/dflkxywlt/image/upload/v1712339989/image/Start%20Project%20Parallax%20Scrolling%20Website/nrskfatchxzpmoul5bed.png"
-        id="plant">
-    <img src="https://res.cloudinary.com/dflkxywlt/image/upload/v1712339988/image/Start%20Project%20Parallax%20Scrolling%20Website/oremqikit6j9rlupmbzk.png"
-        id="leaf">
-</section>
+  <div class="containerr">
+    <!-- Khu vực các khóa học -->
+    <div class="courses-section">
+      <h2>Các Khóa Học</h2>
+      <ul>
+        <li>Khóa học 1</li>
+        <li>Khóa học 2</li>
+        <li>Khóa học 3</li>
+        <!-- Thêm các khóa học khác nếu cần -->
+      </ul>
+    </div>
 
-<script src="{% static 'assets/js/parallax.js' %}"></script>
-
-<!-- <section id="hero" class="d-flex align-items-center">
-      <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
-        <div class="row justify-content-center">
-          <div class="col-xl-7 col-lg-9 text-center">
-            {% if user.is_authenticated %}
-            <h1>Xin Chào, {{user.username}}</h1>
-            <h2>Một sản phẩm của IT-GEO-FR</h2>
-            {% else %}
-            <h1>Chào mừng bạn <br> đến với Mầm Xanh</h1>
-            <h2>Một sản phẩm của IT-GEO-FR</h2>
-            <div class="text-center">
-              <a href="/login" class="btn-get-started scrollto">Bắt Đầu Nào</a>
-            </div>
-            {% endif %}
-          </div>
-        </div>
+    <!-- Khu vực banner động -->
+    <div class="carousel-container">
+      <div class="carousel-slide">
+        <img
+          src="https://scontent.fsgn5-15.fna.fbcdn.net/v/t39.30808-6/456841609_122168089718191197_203144597932250530_n.png?_nc_cat=111&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeGnNejvqEWZ8eDsP-AhiGfwoQ_S4JxnAxChD9LgnGcDEMxFDnARprxADUEOSxEoyaB9k5D_W1575hmovR1IvPBw&_nc_ohc=-yZldcsaFSwQ7kNvgEb1Aim&_nc_ht=scontent.fsgn5-15.fna&_nc_gid=Aulnze4yPONk1XHeUZoB-HP&oh=00_AYCBL31Lq3twKemH-5xx0n1vEAHwTQ2KlC5XkLE3cO0syQ&oe=66E08053"
+          alt="Image 1">
+        <img
+          src="https://scontent.fsgn5-10.fna.fbcdn.net/v/t39.30808-6/452373469_122160637922191197_6618678973187151562_n.png?stp=dst-jpg&_nc_cat=110&ccb=1-7&_nc_sid=86c6b0&_nc_eui2=AeFt1ITpVl69foB7Eojo5XPMgreJ7WawEweCt4ntZrATB8re8tSawCiL53vegPK368neWz69KKUMBzvbBWmcTG0b&_nc_ohc=_QCNf4OSRlAQ7kNvgFUVNDh&_nc_ht=scontent.fsgn5-10.fna&_nc_gid=AETuy-Raz3rCmLmXH06q628&oh=00_AYBWf05vH5wgQ5QNLraxVMrAz9TJcLECp9S2x5tJ4-Ty0g&oe=66E08A66"
+          alt="Image 2">
+        <img
+          src="https://scontent.fsgn5-8.fna.fbcdn.net/v/t39.30808-6/457254784_122168550908191197_3420296894895773139_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeGa44ALuzxF-4e44E982lK1xIXDnHra_zjEhcOcetr_OAsrBl8x6BheMSrORTow9GLm-wgtkWYLhbsogZESX6FM&_nc_ohc=Lvmn6ucaMHAQ7kNvgHXjoUS&_nc_ht=scontent.fsgn5-8.fna&oh=00_AYAXGVkHrzt8vxMOpuGFeeqjVQmIXBAzGAYoPGav5RdXWA&oe=66E09940"
+          alt="Image 3">
+        <img
+          src="https://scontent.fsgn5-3.fna.fbcdn.net/v/t39.30808-6/453870715_122163883538191197_705267360805954947_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeHFOlKUGjA4X1vrtEJlW68vtV_w_zHl0te1X_D_MeXS1xtQgoosVqqYc6AiNssJJnazdyVQ4O2rDsYetZJydPCR&_nc_ohc=nlR9-im0vjoQ7kNvgHOwjZd&_nc_ht=scontent.fsgn5-3.fna&_nc_gid=A3Zv_I_dJkGFHjbg3C6XV94&oh=00_AYD_Q28D0AfExVQD91QaDM9_2o8Tlp92Hcom5D5PCOuVBg&oe=66E084AB"
+          alt="Image 4">
+        <img
+          src="https://scontent.fsgn5-8.fna.fbcdn.net/v/t39.30808-6/451741064_1030070425303869_870106813836282244_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFudg0gEa4qgWEjEP2qtcD2UEIyzcS7rn1QQjLNxLuufSsitsOsZwLB5rSHtBoNqdKwP2OTsTj2lEqSBwfg4o_h&_nc_ohc=4XEyAOqhe8kQ7kNvgH2ajwX&_nc_ht=scontent.fsgn5-8.fna&_nc_gid=ARnz9HqouxL9gnybm-bC1Hg&oh=00_AYAZB75JUjJM13CYr4HkNv_dNbMTGm-NBXNYR4EJDXZKCA&oe=66E08B9E"
+          alt="Image 5">
+        <img
+          src="https://scontent.fsgn5-3.fna.fbcdn.net/v/t39.30808-6/452310225_122160638648191197_1689703238049010851_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeGXubvIY-oWG08WS_qtDUpOEOAv9s8vUm0Q4C_2zy9SbQYkFbXJpfjlLWLEzNQ7NFJiELktFWg8H4QNRHwQBHRu&_nc_ohc=sE3HeNSgDi4Q7kNvgHupUs-&_nc_ht=scontent.fsgn5-3.fna&oh=00_AYDCzL7NDLeXXj02_Lkv4I6MysDam5yRbI_2uaxGZJB5jw&oe=66E07F9D"
+          alt="Image 6">
       </div>
-    </section> -->
+    </div>
+
+    <!-- Khu vực thông tin về trung tâm -->
+    <div class="info-section">
+      <h2>Thông Tin Về MEDIX</h2>
+      <p>Trung tâm của chúng tôi cung cấp các khóa học chuyên nghiệp với đội ngũ giảng viên giàu kinh nghiệm.</p>
+      <p>Lò luyện thi THPT chuyên và Đại học. Toán Lý Hóa Sinh Anh KHTN tại Bình Chánh, Quận Bình Tân, Quận 10 TP.HCM
+      </p>
+      <p>Điện thoại: 0123 456 789</p>
+    </div>
+  </div>
+</section>
+<script>
+  let currentIndex = 0;
+  const slides = document.querySelectorAll('.carousel-slide img');
+  const totalSlides = slides.length;
+
+  function showNextSlide() {
+    currentIndex++;
+    if (currentIndex >= totalSlides) {
+      currentIndex = 0; // Quay lại ảnh đầu tiên sau khi đã đi hết ảnh cuối
+    }
+    updateSlidePosition();
+  }
+
+  function updateSlidePosition() {
+    const slideWidth = slides[0].clientWidth;
+    const newTransformValue = -currentIndex * slideWidth;
+    document.querySelector('.carousel-slide').style.transform = `translateX(${newTransformValue}px)`;
+  }
+
+  // Tự động chuyển đổi ảnh mỗi 3 giây
+  setInterval(showNextSlide, 3000);
+
+</script>

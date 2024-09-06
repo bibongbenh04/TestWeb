@@ -1,13 +1,15 @@
 {% load static %}
+<link rel="stylesheet" href="{% static 'assets/css/portfolio.css' %}">
+
 <!-- ======= Portfolio Section ======= -->
 <section id="portfolio" class="portfolio">
   <div class="container" data-aos="fade-up">
 
     <div class="section-title">
-      <h2>Danh Mục</h2>
-      <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
-        consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in
-        iste officiis commodi quidem hic quas.</p>
+      <h2>Danh Mục Khóa Học</h2>
+      <p>Khám phá các khóa học chất lượng cao được thiết kế để giúp bạn nâng cao kiến thức và kỹ năng của mình. Dưới đây
+        là danh sách các khóa học nổi bật của chúng tôi, bao gồm các ứng dụng học tập, tài liệu tham khảo và nhiều hơn
+        nữa.</p>
     </div>
 
     <div class="row" data-aos="fade-up" data-aos-delay="150">
@@ -15,7 +17,7 @@
         <ul id="portfolio-flters">
           <li data-filter="*" class="filter-active">Tất Cả</li>
           <li data-filter=".filter-app">Ứng Dụng</li>
-          <li data-filter=".filter-card">Ảnh</li>
+          <li data-filter=".filter-card">Tài Liệu</li>
           <li data-filter=".filter-web">Web</li>
         </ul>
       </div>
@@ -25,149 +27,71 @@
 
       <div class="col-lg-4 col-md-6 portfolio-item filter-app">
         <div class="portfolio-wrap">
-          <a href="/accroblox5k">
-            <img src="https://chantroisangtao.vn/wp-content/uploads/2024/01/Toan-12-T1-BIT.png" class="img-fluid"
-              alt="">
-            <div class="portfolio-info">
-              <h4>Toán 12</h4>
-              <p>Toán 12</p>
-              <div class="portfolio-links">
-          </a>
-          <a href="/accroblox5k" title="Bấm vào Acc Roblox chỉ với giá"><i class="bx bx-link"></i></a>
+          <img src="https://chantroisangtao.vn/wp-content/uploads/2024/01/Toan-12-T1-BIT.png" class="img-fluid"
+            alt="Khóa học Toán 12">
+          <div class="portfolio-info">
+            <h4>Khóa Học Toán 12</h4>
+            <p>Khóa học toán nâng cao cho học sinh lớp 12</p>
+            <div class="portfolio-links">
+              <a href="/accroblox5k" class="btn btn-primary">Xem Chi Tiết</a>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-    <div class="portfolio-wrap">
-      <img src="https://hieusach24h.com/wp-content/uploads/2021/09/Tieng-Anh-12-Tap-1.jpg" class="img-fluid" alt="">
-      <div class="portfolio-info">
-        <h4>Từ Điển Tiếng Anh</h4>
-        <p>Dictionary EngLish</p>
-        <div class="portfolio-links">
-          <a href="{% static 'assets/img/portfolio/ELdic.png' %}" data-gallery="portfolioGallery"
-            class="portfolio-lightbox" title="Web 3"><i class="bx bx-plus"></i></a>
-          <a href="dictionaryEL" title="Bấm để vào trang"><i class="bx bx-link"></i></a>
+      <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+        <div class="portfolio-wrap">
+          <img src="https://hieusach24h.com/wp-content/uploads/2021/09/Tieng-Anh-12-Tap-1.jpg" class="img-fluid"
+            alt="Từ Điển Tiếng Anh">
+          <div class="portfolio-info">
+            <h4>Từ Điển Tiếng Anh</h4>
+            <p>Dictionary EngLish - Học từ vựng hiệu quả</p>
+            <div class="portfolio-links">
+              <a href="{% static 'assets/img/portfolio/ELdic.png' %}" class="portfolio-lightbox"
+                data-gallery="portfolioGallery" title="Từ Điển Tiếng Anh"><i class="bx bx-plus"></i></a>
+              <a href="dictionaryEL" class="btn btn-primary">Xem Chi Tiết</a>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-    <div class="portfolio-wrap">
-      <img
-        src="https://static.wikia.nocookie.net/mon-hoc/images/6/66/V%E1%BA%ADt_l%C3%AD_12.jpg/revision/latest?cb=20180530083616&path-prefix=vi"
-        class="img-fluid" alt="">
-      <div class="portfolio-info">
-        <h4>Vật Lý 12</h4>
-        <p>App</p>
-        <div class="portfolio-links">
-          <a href="{% static 'assets/img/portfolio/portfolio-3.jpg' %}" data-gallery="portfolioGallery"
-            class="portfolio-lightbox" title="App 2"><i class="bx bx-plus"></i></a>
-          <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
+      <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+        <div class="portfolio-wrap">
+          <img
+            src="https://static.wikia.nocookie.net/mon-hoc/images/6/66/V%E1%BA%ADt_l%C3%AD_12.jpg/revision/latest?cb=20180530083616&path-prefix=vi"
+            class="img-fluid" alt="Khóa học Vật Lý 12">
+          <div class="portfolio-info">
+            <h4>Khóa Học Vật Lý 12</h4>
+            <p>Khóa học vật lý lớp 12 với các ứng dụng học tập</p>
+            <div class="portfolio-links">
+              <a href="{% static 'assets/img/portfolio/portfolio-3.jpg' %}" class="portfolio-lightbox"
+                data-gallery="portfolioGallery" title="Khóa học Vật Lý 12"><i class="bx bx-plus"></i></a>
+              <a href="portfolio-details.html" class="btn btn-primary">Xem Chi Tiết</a>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-    <div class="portfolio-wrap">
-      <img src="https://salt.tikicdn.com/media/catalog/product/i/m/img961.u335.d20160423.t180740.jpg" class="img-fluid"
-        alt="">
-      <div class="portfolio-info">
-        <h4>Card 2</h4>
-        <p>Card</p>
-        <div class="portfolio-links">
-          <a href="{% static 'assets/img/portfolio/portfolio-4.jpg' %}" data-gallery="portfolioGallery"
-            class="portfolio-lightbox" title="Card 2"><i class="bx bx-plus"></i></a>
-          <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
+      <div class="col-lg-4 col-md-6 portfolio-item filter-card">
+        <div class="portfolio-wrap">
+          <img src="https://salt.tikicdn.com/media/catalog/product/i/m/img961.u335.d20160423.t180740.jpg"
+            class="img-fluid" alt="Tài Liệu Khóa Học">
+          <div class="portfolio-info">
+            <h4>Tài Liệu Khóa Học</h4>
+            <p>Tài liệu học tập hữu ích và chất lượng</p>
+            <div class="portfolio-links">
+              <a href="{% static 'assets/img/portfolio/portfolio-4.jpg' %}" class="portfolio-lightbox"
+                data-gallery="portfolioGallery" title="Tài Liệu Khóa Học"><i class="bx bx-plus"></i></a>
+              <a href="portfolio-details.html" class="btn btn-primary">Xem Chi Tiết</a>
+            </div>
+          </div>
         </div>
       </div>
+
+      <!-- More portfolio items -->
+
     </div>
-  </div>
-
-  <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-    <div class="portfolio-wrap">
-      <img src="https://salt.tikicdn.com/media/catalog/product/i/m/img961.u335.d20160423.t180740.jpg" class="img-fluid"
-        alt="">
-      <div class="portfolio-info">
-        <h4>Các Bài Viết</h4>
-        <p>Post</p>
-        <div class="portfolio-links">
-          <a href="{% static 'assets/img/portfolio/post.png' %}" data-gallery="portfolioGallery"
-            class="portfolio-lightbox" title="Web 2"><i class="bx bx-plus"></i></a>
-          <a href="/#post" title="Bấm để vào trang"><i class="bx bx-link"></i></a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-    <div class="portfolio-wrap">
-      <img src="https://salt.tikicdn.com/media/catalog/product/i/m/img961.u335.d20160423.t180740.jpg" class="img-fluid"
-        alt="">
-      <div class="portfolio-info">
-        <h4>App 3</h4>
-        <p>App</p>
-        <div class="portfolio-links">
-          <a href="{% static 'assets/img/portfolio/portfolio-6.jpg' %}" data-gallery="portfolioGallery"
-            class="portfolio-lightbox" title="App 3"><i class="bx bx-plus"></i></a>
-          <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-    <div class="portfolio-wrap">
-      <img src="https://salt.tikicdn.com/media/catalog/product/i/m/img961.u335.d20160423.t180740.jpg" class="img-fluid"
-        alt="">
-      <div class="portfolio-info">
-        <h4>Card 1</h4>
-        <p>Card</p>
-        <div class="portfolio-links">
-          <a href="{% static 'assets/img/portfolio/portfolio-7.jpg' %}" data-gallery="portfolioGallery"
-            class="portfolio-lightbox" title="Card 1"><i class="bx bx-plus"></i></a>
-          <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-    <div class="portfolio-wrap">
-      <img src="https://salt.tikicdn.com/media/catalog/product/i/m/img961.u335.d20160423.t180740.jpg" class="img-fluid"
-        alt="">
-      <div class="portfolio-info">
-        <h4>Card 3</h4>
-        <p>Card</p>
-        <div class="portfolio-links">
-          <a href="{% static 'assets/img/portfolio/portfolio-8.jpg' %}" data-gallery="portfolioGallery"
-            class="portfolio-lightbox" title="Card 3"><i class="bx bx-plus"></i></a>
-          <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-    <div class="portfolio-wrap">
-      <img src="https://salt.tikicdn.com/media/catalog/product/i/m/img961.u335.d20160423.t180740.jpg" class="img-fluid"
-        alt="">
-      <div class="portfolio-info">
-        <h4>Kiểm Tra</h4>
-        <p>quiz</p>
-        <div class="portfolio-links">
-          <a href="{% static 'assets/img/portfolio/ELdic.png' %}" data-gallery="portfolioGallery"
-            class="portfolio-lightbox" title="Web Quiz"><i class="bx bx-plus"></i></a>
-          <a href="/quiz" title="Bấm để vào trang"><i class="bx bx-link"></i></a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  </div>
-
   </div>
 </section><!-- End Portfolio Section -->
+
+<script src="{% static 'assets/js/portfolio.js' %}"></script>

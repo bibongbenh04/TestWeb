@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carousel Banner</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .carousel-container {
+            width: 50%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .carousel-slide {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: auto;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="carousel-container">
+        <div class="carousel-slide">
+            <img src="https://hocmai.vn/media/images/home/desktop/170banner-webphuongpa-715-x400.png" alt="Image 1">
+            <img src="https://hocmai.vn/media/images/home/desktop/170banner-webphuongpa-715-x400.png" alt="Image 2">
+            <img src="https://hocmai.vn/media/images/home/desktop/170banner-webphuongpa-715-x400.png" alt="Image 3">
+            <img src="https://hocmai.vn/media/images/home/desktop/170banner-webphuongpa-715-x400.png" alt="Image 4">
+            <img src="https://hocmai.vn/media/images/home/desktop/170banner-webphuongpa-715-x400.png" alt="Image 5">
+            <img src="https://hocmai.vn/media/images/home/desktop/170banner-webphuongpa-715-x400.png" alt="Image 6">
+        </div>
+    </div>
+    <script>
+        let currentIndex = 0;
+        const slides = document.querySelectorAll('.carousel-slide img');
+        const totalSlides = slides.length;
+
+        function showNextSlide() {
+            currentIndex++;
+            if (currentIndex >= totalSlides) {
+                currentIndex = 0; // Quay lại ảnh đầu tiên sau khi đã đi hết ảnh cuối
+            }
+            updateSlidePosition();
+        }
+
+        function updateSlidePosition() {
+            const slideWidth = slides[0].clientWidth;
+            const newTransformValue = -currentIndex * slideWidth;
+            document.querySelector('.carousel-slide').style.transform = `translateX(${newTransformValue}px)`;
+        }
+
+        // Tự động chuyển đổi ảnh mỗi 3 giây
+        setInterval(showNextSlide, 3000);
+
+    </script>
+</body>
+
+</html>

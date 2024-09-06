@@ -112,6 +112,7 @@ class LessonVideo(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     url = models.SlugField(max_length=100, unique=True, blank=True)
+    linkggformquiz = models.URLField(null=True)
 
     def save(self, *args, **kwargs):
         if not self.url:
@@ -121,6 +122,24 @@ class LessonVideo(models.Model):
         
     def __str__(self):
         return f"Lesson {self.order}: {self.title}"
+
+class LessonResource(models.Model):
+    lesson = models.ForeignKey(LessonVideo, related_name='resources', on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
+    file_url = models.URLField(max_length=500, blank=True)  
+
+    def __str__(self):
+        return self.title
+
+class LessonNote(models.Model):
+    lesson = models.ForeignKey(LessonVideo, related_name='notes', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='notes', on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Note by {self.user.username} on {self.lesson.title}"
 
 class Feature(models.Model):
 	name = models.CharField(max_length=100)

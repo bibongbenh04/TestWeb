@@ -3,14 +3,38 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User, auth
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages as django_messages
-from .models import Feature, quizQuestion, Post, Category, categoryQuiz, Science, Header, Portfolio, Store, Comment, Community, ProductImage, AccRoblox5k, Subject, LessonVideo, Instructor, Chapter, Course
+from .models import Feature, quizQuestion, Post, Category, categoryQuiz, Science, Header, Portfolio, Store, Comment, Community, ProductImage, AccRoblox5k, Subject, LessonVideo, Instructor, Chapter, Course, LessonNote, LessonResource
 from django.core.serializers import serialize
 from django.utils.translation import gettext as _
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.contenttypes.models import ContentType
+from django.views.decorators.csrf import csrf_exempt
 import math
+
+@csrf_exempt
+@login_required
+def save_notes(request):
+    if request.method == 'POST':
+        import json
+        data = json.loads(request.body)
+        lesson_id = data.get('lesson_id')
+        content = data.get('content')
+        
+        lesson = LessonVideo.objects.get(id=lesson_id)
+        note, created = LessonNote.objects.get_or_create(
+            lesson=lesson,
+            user=request.user,
+            defaults={'content': content}
+        )
+        
+        if not created:
+            note.content = content
+            note.save()
+        
+        return JsonResponse({'status': 'success'})
+    return JsonResponse({'status': 'error'}, status=400)
 
 def subjects(request, url):
 	subject = get_object_or_404(Subject, url=url)
@@ -35,16 +59,17 @@ def convertLinkVideoYoutube(link):
     base_url = "https://www.youtube.com/watch?v="
     pos = len(base_url)    
     return link[pos:]
-
+@login_required(login_url='/login')
 def lessonvideo(request, url):
     lessonvideo = get_object_or_404(LessonVideo, url=url)
     linkvideo = convertLinkVideoYoutube(lessonvideo.youtube_link)
     chapters = lessonvideo.chapter.course.chapters.all().prefetch_related('videos')
-    
+    user_notes = LessonNote.objects.filter(lesson=lessonvideo, user=request.user).first()
     data = {
         'lessonvideo': lessonvideo,
         'linkvideo': linkvideo,
         'chapters': chapters,  # Thêm danh sách các chương
+		'user_notes': user_notes.content if user_notes else ''
     }
     
     return render(request, 'video.html', data)

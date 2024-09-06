@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{lessonvideo.chapter.course}}</title>
+    <title>{{ lessonvideo.chapter.course }}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,17 +19,61 @@
             display: flex;
             flex-direction: row;
             margin: 20px;
+            flex-wrap: wrap;
         }
 
         .video-container {
             flex: 3;
             margin-right: 20px;
+            position: relative;
         }
 
         .video-container iframe {
             width: 100%;
             height: 500px;
             border: none;
+        }
+
+        .resources-container,
+        .note-taking-container {
+            margin-top: 20px;
+            background-color: #232323;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .resources-header,
+        .note-taking-header {
+            font-size: 18px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .resource-item {
+            margin-bottom: 10px;
+        }
+
+        .resource-item a {
+            color: #00aaff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .resource-item a:hover {
+            color: #0099cc;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            border: none;
+            border-radius: 8px;
+            padding: 10px;
+            background-color: #3a3a3a;
+            color: white;
+            font-size: 14px;
+            resize: none;
+            box-sizing: border-box;
         }
 
         .playlist-container {
@@ -50,6 +94,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: background-color 0.3s ease;
         }
 
         .chapter-header:hover {
@@ -57,7 +102,6 @@
         }
 
         .chapter-content {
-            display: none;
             padding: 10px;
             background-color: #3a3a3a;
             border-radius: 4px;
@@ -102,6 +146,10 @@
             color: #888;
         }
 
+        #current-video {
+            background-color: #5a5a5a;
+        }
+
         .arrow {
             font-size: 14px;
             color: #888;
@@ -110,6 +158,35 @@
         a {
             color: white;
             text-decoration: none;
+        }
+
+        .quiz-container {
+            display: none;
+            margin-top: 20px;
+            background-color: #232323;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .quiz-container iframe {
+            width: 100%;
+            height: 800px;
+            border: none;
+        }
+
+        #quiz-button {
+            padding: 10px 20px;
+            background-color: #00aaff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        #quiz-button:hover {
+            background-color: #0099cc;
         }
     </style>
 </head>
@@ -124,6 +201,26 @@
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen>
             </iframe>
+            <button id="quiz-button">Kiểm tra</button>
+            <div class="quiz-container" id="quiz-container">
+                <iframe id="quiz-form" src="{{lessonvideo.linkggformquiz}}" frameborder="0" marginheight="0"
+                    marginwidth="0">Loading…</iframe>
+            </div>
+            <!-- Lesson Resources -->
+            <div class="resources-container">
+                <div class="resources-header">Lesson Resources</div>
+                {% for resource in lessonvideo.resources.all %}
+                <div class="resource-item">
+                    <a href="{{ resource.file_url }}" target="_blank">{{ resource.title }}</a>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Note-Taking Feature -->
+            <div class="note-taking-container">
+                <div class="note-taking-header">Your Notes</div>
+                <textarea id="notes" placeholder="Type your notes here...">{{ user_notes }}</textarea>
+            </div>
         </div>
 
         <!-- Playlist Section -->
@@ -132,19 +229,19 @@
             <div class="chapter-section">
                 <div class="chapter-header" onclick="toggleChapter('chapter-{{ chapter.order }}')">
                     <span>Chương {{ chapter.order }}: {{ chapter.title }}</span>
-                    <span id="arrow-chapter-{{ chapter.order }}" class="arrow">▼</span>
+                    <span id="arrow-chapter-{{ chapter.order }}" class="arrow">▲</span>
                 </div>
                 <div id="chapter-{{ chapter.order }}" class="chapter-content">
                     {% for video in chapter.videos.all %}
-                    <div class="lesson-item">
+                    <div class="lesson-item" id="{% if video == lessonvideo %}current-video{% endif %}">
                         <a href="/lessonvideo/{{ video.url }}">
-                            <img src=" https://img.youtube.com/vi/{{ video.youtube_link|slice:'-11:' }}/0.jpg"
+                            <img src="https://img.youtube.com/vi/{{ video.youtube_link|slice:'-11:' }}/0.jpg"
                                 alt="{{ video.title }}">
                         </a>
                         <div>
                             <a href="/lessonvideo/{{ video.url }}">
-                                <p class="title">Bài {{video.order}}: {{ video.title |truncatewords:20 | safe}}</p>
-                                <p class="duration">{{ video.duration}}</p>
+                                <p class="title">Bài {{ video.order }}: {{ video.title | truncatewords:20 | safe }}</p>
+                                <p class="duration">{{ video.duration }}</p>
                             </a>
                         </div>
                     </div>
@@ -155,10 +252,38 @@
         </div>
     </div>
 
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+        // URL của Google Form
+        const quizFormUrl = '{{ google_form_url }}';
+
+        // Biến lưu trữ đối tượng player
+        let player;
+
+        // Hàm khởi tạo player
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '390',
+                width: '640',
+                videoId: 'YOUR_YOUTUBE_VIDEO_ID',
+                events: {
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        // Hàm xử lý thay đổi trạng thái của video
+        function onPlayerStateChange(event) {
+            if (event.data == YT.PlayerState.ENDED) {
+                // Mở Google Form khi video kết thúc
+                window.open(quizFormUrl, '_blank');
+            }
+        }
+    </script>
     <script>
         function toggleChapter(chapterId) {
             var content = document.getElementById(chapterId);
-            var arrow = document.getElementById('arrow-' + chapterId);
+            var arrow = document.getElementById('arrow-chapter-' + chapterId);
             if (content.style.display === "none" || content.style.display === "") {
                 content.style.display = "block";
                 arrow.textContent = "▲";
@@ -167,6 +292,49 @@
                 arrow.textContent = "▼";
             }
         }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Automatically open all chapters
+            var chapterContents = document.getElementsByClassName('chapter-content');
+            for (var i = 0; i < chapterContents.length; i++) {
+                chapterContents[i].style.display = 'block';
+            }
+
+            // Scroll to the current video
+            var currentVideo = document.getElementById("current-video");
+            if (currentVideo) {
+                currentVideo.scrollIntoView({ behavior: "smooth", block: "center" });
+            }
+
+            // Auto-save notes feature
+            var notes = document.getElementById("notes");
+            notes.addEventListener("blur", function () {
+                fetch('/save_notes/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: JSON.stringify({
+                        content: notes.value,
+                        lesson_id: '{{ lessonvideo.id }}'
+                    })
+                }).then(response => {
+                    if (response.ok) {
+                        console.log('Notes saved successfully!');
+                    } else {
+                        console.error('Failed to save notes.');
+                    }
+                });
+            });
+
+            var quizButton = document.getElementById('quiz-button');
+            var quizContainer = document.getElementById('quiz-container');
+            quizButton.addEventListener('click', function () {
+                quizContainer.style.display = 'block';
+                quizContainer.scrollIntoView({ behavior: "smooth", block: "start" });
+            });
+        });
     </script>
 </body>
 

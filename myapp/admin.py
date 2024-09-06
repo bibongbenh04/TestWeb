@@ -4,12 +4,24 @@ from .models import quizQuestion, Category, Post, categoryQuiz, Science, Header,
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.contrib import admin
-from .models import Subject, Instructor, Course, Chapter, LessonVideo
+from .models import Subject, Instructor, Course, Chapter, LessonVideo, LessonNote, LessonResource
+
+class LessonResourceInline(admin.TabularInline):
+    model = LessonResource
+    extra = 1  # Number of extra resource fields
+    fields = ('title', 'file_url')
+    readonly_fields = ('id',)  # Only add if you want some fields to be read-only
+
+class LessonNoteInline(admin.TabularInline):
+    model = LessonNote
+    extra = 1  # Number of extra note fields
+    fields = ('user', 'content', 'created_at', 'updated_at')
+    readonly_fields = ('created_at', 'updated_at')
 
 class LessonVideoInline(admin.TabularInline):
     model = LessonVideo
     extra = 1  # Số lượng video mặc định để thêm mới
-    fields = ('title', 'youtube_link', 'duration', 'order')
+    fields = ('title', 'youtube_link', 'duration', 'order', 'linkggformquiz')
     readonly_fields = ('created_at', 'updated_at')
     ordering = ('order',)
 # Tùy chỉnh Subject admin
@@ -73,19 +85,20 @@ class ChapterAdmin(admin.ModelAdmin):
 # Tùy chỉnh LessonVideo admin
 @admin.register(LessonVideo)
 class LessonVideoAdmin(admin.ModelAdmin):
-    list_display = ('title', 'chapter', 'order', 'youtube_link')
+    list_display = ('title', 'chapter', 'order', 'youtube_link', 'linkggformquiz')
     search_fields = ('title', 'description')
     list_filter = ('chapter__course', 'chapter')
     readonly_fields = ('created_at', 'updated_at')
     ordering = ('chapter', 'order')
     fieldsets = (
         (None, {
-            'fields': ('chapter', 'title', 'description', 'youtube_link', 'duration', 'order')
+            'fields': ('chapter', 'title', 'description', 'youtube_link', 'duration', 'order', 'linkggformquiz')
         }),
         ('Timestamps', {
             'fields': ('created_at', 'updated_at')
         }),
     )
+    inlines = [LessonResourceInline, LessonNoteInline]
 
 # Register your models here.
 class ProductImageInline(admin.TabularInline):

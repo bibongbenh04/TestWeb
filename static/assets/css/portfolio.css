@@ -1,0 +1,133 @@
+/* Container chính cho phần danh mục */
+.portfolio {
+    padding: 60px 0;
+}
+
+/* Tiêu đề phần danh mục */
+.section-title {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.section-title h2 {
+    font-size: 36px;
+    margin-bottom: 10px;
+    color: #007bff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.section-title p {
+    font-size: 16px;
+    color: #666;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Bộ lọc danh mục */
+#portfolio-flters {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+#portfolio-flters li {
+    display: inline-block;
+    margin: 0 10px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#portfolio-flters .filter-active {
+    background-color: #007bff;
+    color: #fff;
+    border: 2px solid #007bff;
+}
+
+/* Container và item danh mục */
+.portfolio-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.portfolio-item {
+    width: 100%;
+    max-width: 360px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.portfolio-wrap {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.portfolio-wrap img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.5s, opacity 0.5s;
+}
+
+.portfolio-wrap:hover img {
+    transform: scale(1.1);
+    opacity: 0.8;
+}
+
+.portfolio-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    transition: opacity 0.3s;
+    opacity: 0;
+    transform: translateY(100%);
+}
+
+.portfolio-wrap:hover .portfolio-info {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.portfolio-info h4 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.portfolio-info p {
+    font-size: 14px;
+}
+
+/* Các liên kết trong danh mục */
+.portfolio-links {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.portfolio-links a {
+    color: #fff;
+    font-size: 20px;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.portfolio-links a:hover {
+    color: #007bff;
+    transform: scale(1.2);
+}
