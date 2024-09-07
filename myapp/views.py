@@ -111,6 +111,7 @@ def searchStoreByName(request):
 # Create your views here.
 def index(request):
 	subjects = Subject.objects.filter(is_active=True)
+	courses = Course.objects.filter(is_active = True)
 	heads = Header.objects.filter(is_active = True)
 	posts = Post.objects.all()[:5]
 	cats = Category.objects.filter(is_active = True)
@@ -119,7 +120,8 @@ def index(request):
 		'heads': heads,
 		'posts' : posts,
 		'cats': cats,
-		'subjects':subjects
+		'subjects':subjects,
+		'courses' : courses
 	}
 	return render(request, 'index.html', data)
 
@@ -136,7 +138,6 @@ def science(request):
 	}
 	return render(request, 'science.html', data)
 
-"""
 def community(request):
 	heads = Header.objects.filter(is_active = True)
 	communities = Community.objects.filter(is_active = True)[:5]
@@ -165,7 +166,7 @@ def fcommunity(request, url):
     
     cats = Category.objects.filter(is_active=True)
     return render(request, 'AdminCus/tpost.html', {'post': post, 'cats': cats, 'comments': get_all_comments, 'number_of_comments': number_of_comments})
-"""
+
 
 
 def load_more_sciences(request):

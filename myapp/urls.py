@@ -7,7 +7,7 @@ from . import views
 urlpatterns = [
 	path('', views.index, name = 'index'),
 	path('science', views.science, name = 'science'),
-	# path('community', views.community, name = 'community'),
+	path('community', views.community, name = 'community'),
 	path('login', views.login, name = 'login'),
 	path('login/', views.login, name = 'login'),
 	path('signup', views.signup, name = 'signup'),
@@ -17,7 +17,7 @@ urlpatterns = [
 	path('store', views.store, name = 'store'),
     path('subjects/<slug:url>', views.subjects, name='subjects'),
     path('blog/<slug:url>', views.post, name='blog'),
-#    path('community/<slug:url>', views.fcommunity, name='fcommunity'),
+    path('community/<slug:url>', views.fcommunity, name='fcommunity'),
     path('category/<slug:url>', views.postfillcat),
     path('course/<slug:url>', views.course),
     path('lessonvideo/<slug:url>', views.lessonvideo),

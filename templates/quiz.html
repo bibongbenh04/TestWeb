@@ -1,29 +1,34 @@
 {% load static %}
 <html>
+
 <head>
-	<title>Mầm Xanh Trắc Nghiệm</title>
+	<title>MEDIX Trắc Nghiệm</title>
 	<link rel="stylesheet" href="{% static 'quiz/quizStyle.css' %}">
 	<script id="questions-data" type="application/json">
 		{{ questions_data.questions|json_script:"questions-data"| safe}}
 	</script>
 </head>
+
 <body>
 	{% include 'django-chat.html' %}
 
 	<main class="main">
 		<div class="container">
 			<video autoplay loop muted plays-inline class="background-clip">
-				<source src = "https://res.cloudinary.com/dflkxywlt/video/upload/v1712000643/T%E1%BB%95ng_H%E1%BB%A3p_Nh%E1%BB%AFng_Video_Anime_Chill_C%E1%BA%A3m_Gi%C3%A1c_Tho%E1%BA%A3i_M%C3%A3i_13_1_kyvcn9.mp4" type="video/mp4">
+				<source
+					src="https://res.cloudinary.com/dflkxywlt/video/upload/v1712000643/T%E1%BB%95ng_H%E1%BB%A3p_Nh%E1%BB%AFng_Video_Anime_Chill_C%E1%BA%A3m_Gi%C3%A1c_Tho%E1%BA%A3i_M%C3%A3i_13_1_kyvcn9.mp4"
+					type="video/mp4">
 			</video>
 			<audio controls autoplay loop>
-				<source src="https://res.cloudinary.com/dflkxywlt/video/upload/v1712000899/sc1jnbyiyptemlsw6ej3.mp3" type="audio/mp3">
-			 </audio>
+				<source src="https://res.cloudinary.com/dflkxywlt/video/upload/v1712000899/sc1jnbyiyptemlsw6ej3.mp3"
+					type="audio/mp3">
+			</audio>
 			<section class="quiz-section">
 				<div class="quiz-box">
 					<h1>KIỂM TRA</h1>
 					<div class="quiz-header">
-						<span>Mầm Xanh <br> Website </span>
-						<span class="clock" id = "clock">00:15</span>
+						<span>MEDIX <br> Website </span>
+						<span class="clock" id="clock">00:15</span>
 						<span class="header-score"> Score: 0 / 5</span>
 					</div>
 					<h2 class="question-text">Ai thông minh hơn học sinh lớp 5 ?</h2>
@@ -39,12 +44,12 @@
 				<div class="result-box">
 					<h2>Quiz Result!</h2>
 					<div class="percentage-container">
-						<div class="circular-progress">	
+						<div class="circular-progress">
 							<span class="progress-value">0%</span>
 						</div>
-						
+
 						<span class="score-text">Điểm của bạn là 10 trên 10</span>
-						
+
 					</div>
 					<div class="buttons">
 						<button class="retry-btn">Thử lại</button>
@@ -55,33 +60,36 @@
 
 			<section class="home">
 				<div class="home-content">
-					<h1>  Mầm xanh <br> Trắc nghiệm</h1>
+					<h1> MEDIX-QUIZ <br> Trắc nghiệm</h1>
 					<p>Đây là cuộc thi do ban tổ chức tạo ra nhằm góp phần ...</p>
 					<button class="start-btn">Bắt Đầu Kiểm Tra</button>
 					<!-- <a class="goMamXanh-btn" href = "/"> <img src="{% static 'assets/img/logoMX.png'%}" alt=""> </a> -->
-					<a class="goMamXanh-btn" href = "/"> <img src="https://cdn-icons-png.flaticon.com/256/25/25694.png" style="width: 20%;"> </a>
+					<a class="goMamXanh-btn" href="/"> <img src="https://cdn-icons-png.flaticon.com/256/25/25694.png"
+							style="width: 20%;"> </a>
 				</div>
 			</section>
 		</div>
 	</main>
-	
+
 	<div class="popup-info">
 		<h2>Bộ Đề Kiểm Tra</h2>
 		<h3 style="color: red;">Cuộc Thi</h3>
 		{% for cat in questions_data.category%}
-			{% if cat.is_active %}
-				{% if cat.typeCate == 'CONTEST' %}
-				<span class="info">  <a href="#" class="info-btn continue-btn" data-url="{{ cat.url }}" type="{{ cat.typeCate }}">{{cat.title}} - {{cat.description | safe}}</a> </span> <br>
-				{% endif %}
-			{% endif %}
+		{% if cat.is_active %}
+		{% if cat.typeCate == 'CONTEST' %}
+		<span class="info"> <a href="#" class="info-btn continue-btn" data-url="{{ cat.url }}"
+				type="{{ cat.typeCate }}">{{cat.title}} - {{cat.description | safe}}</a> </span> <br>
+		{% endif %}
+		{% endif %}
 		{% endfor %}
 		<h3 style="color: red;">Luyện Tập</h3>
 		{% for cat in questions_data.category%}
-			{% if cat.is_active %}
-				{% if cat.typeCate == 'TEST ONL' %}
-					<span class="info">  <a href="#" class="info-btn continue-btn" data-url="{{ cat.url }}" type="{{ cat.typeCate }}">{{cat.title}} - {{cat.description | safe}}</a> </span> <br>
-				{% endif %}
-			{% endif %}
+		{% if cat.is_active %}
+		{% if cat.typeCate == 'TEST ONL' %}
+		<span class="info"> <a href="#" class="info-btn continue-btn" data-url="{{ cat.url }}"
+				type="{{ cat.typeCate }}">{{cat.title}} - {{cat.description | safe}}</a> </span> <br>
+		{% endif %}
+		{% endif %}
 		{% endfor %}
 
 		<div class="btn-group">
@@ -91,4 +99,5 @@
 	</div>
 	<script src="{% static 'quiz/script.js' %} "></script>
 </body>
+
 </html>
